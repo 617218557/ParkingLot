@@ -42,7 +42,6 @@ public class MyFriendsActivity extends AppCompatActivity {
         tv_title = (TextView) findViewById(R.id.layout_actionBar_tv_title);
         btn_next = (Button) findViewById(R.id.layout_actionBar_btn_next);
 
-
         lv_friends = (JazzyListView) findViewById(R.id.activity_my_friends_lv_friends);
     }
 
