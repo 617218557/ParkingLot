@@ -95,7 +95,7 @@ public class ChooseSpaceActivity extends AppCompatActivity {
 
         @Override
         protected Object doInBackground(Object[] params) {
-            return HttpUtils.httpPost(URLAddress.allSpaceInfoURl);
+            return HttpUtils.httpGet(URLAddress.allSpaceInfoURl);
         }
 
         @Override

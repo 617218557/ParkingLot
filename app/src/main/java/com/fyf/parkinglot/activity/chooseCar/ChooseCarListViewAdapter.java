@@ -13,8 +13,6 @@ import com.fyf.parkinglot.R;
 import com.fyf.parkinglot.model.UserInfoInCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.ImageSize;
-import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 /**
  * Created by fengyifei on 15/11/28.
@@ -24,7 +22,6 @@ public class ChooseCarListViewAdapter extends BaseAdapter {
     private Context context;
     private LayoutInflater mInflater;
     private DisplayImageOptions options;
-    private ImageSize mImageSize;
 
     public ChooseCarListViewAdapter(Context context) {
         this.context = context;
@@ -32,7 +29,6 @@ public class ChooseCarListViewAdapter extends BaseAdapter {
         options = new DisplayImageOptions.Builder()
                 .cacheInMemory(true).cacheOnDisk(true)
                 .bitmapConfig(Bitmap.Config.RGB_565).build();
-        mImageSize = new ImageSize(60, 60);
     }
 
     @Override
@@ -51,7 +47,7 @@ public class ChooseCarListViewAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, ViewGroup parent) {
 
         final ViewHolder holder;
         if (convertView == null) {
@@ -67,14 +63,7 @@ public class ChooseCarListViewAdapter extends BaseAdapter {
         }
         holder.tv_type.setText(UserInfoInCache.myCarList.get(position).getCar_type());
         holder.tv_licenseNum.setText(UserInfoInCache.myCarList.get(position).getCar_licenseNum());
-        ImageLoader.getInstance().loadImage(UserInfoInCache.myCarList.get(position).getCar_img(), mImageSize, options,
-                new SimpleImageLoadingListener() {
-                    @Override
-                    public void onLoadingComplete(String arg0,
-                                                  View arg1, Bitmap bitmap) {
-                        holder.iv_car.setImageBitmap(bitmap);
-                    }
-                });
+        ImageLoader.getInstance().displayImage(UserInfoInCache.myCarList.get(position).getCar_img(), holder.iv_car, options);
         return convertView;
     }
 

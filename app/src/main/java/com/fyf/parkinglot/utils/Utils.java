@@ -3,7 +3,6 @@ package com.fyf.parkinglot.utils;
 import android.graphics.Bitmap;
 import android.os.Environment;
 import android.util.Base64;
-import android.util.Log;
 
 import com.fyf.parkinglot.common.GlobalDefine;
 import com.qiniu.util.Auth;
@@ -14,6 +13,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.regex.Matcher;
@@ -41,7 +41,6 @@ public class Utils {
     public static String getUploadToken() {
         Auth auth = Auth.create(GlobalDefine.QINIU_AK, GlobalDefine.QINIU_SK);
         String uploadToken = auth.uploadToken("fyfparkinglot");
-        Log.e("七牛上传token", uploadToken);
         return uploadToken;
     }
 
@@ -88,5 +87,15 @@ public class Utils {
         bos.flush();
         bos.close();
         return myCaptureFile.getAbsolutePath();
+    }
+
+    // 判断白天晚上,true为晚上,false为白天
+    public static boolean isNight() {
+        Calendar cal = Calendar.getInstance();
+        if (cal.get(Calendar.HOUR_OF_DAY) > 6 && cal.get(Calendar.HOUR_OF_DAY) < 18) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }

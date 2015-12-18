@@ -41,8 +41,10 @@
             android:name="BAIDU_PUSH_API_KEY"
             android:value="V6ufwwPH2TuwX4aOyzulCFOb" />
         <!-- 设置环信应用的appkey -->
-        <meta-data android:name="EASEMOB_APPKEY"  android:value="617218557#parkinglot" />
-        <!-- 声明sdk所需的service SDK核心功能-->
+        <meta-data
+            android:name="EASEMOB_APPKEY"
+            android:value="617218557#parkinglot" />
+        <!-- 声明sdk所需的service SDK核心功能 -->
         <service android:name="com.easemob.chat.EMChatService" />
 
         <activity android:name=".activity.login.LoginActivity">
@@ -97,19 +99,17 @@
         <activity
             android:name="com.baidu.android.pushservice.richmedia.MediaViewActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:label="MediaViewActivity" >
-        </activity>
+            android:label="MediaViewActivity"></activity>
         <activity
             android:name="com.baidu.android.pushservice.richmedia.MediaListActivity"
             android:configChanges="orientation|keyboardHidden"
             android:label="MediaListActivity"
-            android:launchMode="singleTask" >
-        </activity>
+            android:launchMode="singleTask"></activity>
         <!-- push富媒体结束 -->
 
 
         <!-- push应用定义消息receiver声明 -->
-        <receiver android:name="com.fyf.parkinglot.push.MyPushMessageReceiver" >
+        <receiver android:name=".push.MyPushMessageReceiver">
             <intent-filter>
 
                 <!-- 接收push消息 -->
@@ -123,7 +123,7 @@
         <!-- push必须的receviver和service声明 -->
         <receiver
             android:name="com.baidu.android.pushservice.PushServiceReceiver"
-            android:process=":bdservice_v1" >
+            android:process=":bdservice_v1">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
@@ -138,7 +138,7 @@
         </receiver>
         <receiver
             android:name="com.baidu.android.pushservice.RegistrationReceiver"
-            android:process=":bdservice_v1" >
+            android:process=":bdservice_v1">
             <intent-filter>
                 <action android:name="com.baidu.android.pushservice.action.METHOD" />
                 <action android:name="com.baidu.android.pushservice.action.BIND_SYNC" />
@@ -153,7 +153,7 @@
         <service
             android:name="com.baidu.android.pushservice.PushService"
             android:exported="true"
-            android:process=":bdservice_v1" >
+            android:process=":bdservice_v1">
             <intent-filter>
                 <action android:name="com.baidu.android.pushservice.action.PUSH_SERVICE" />
             </intent-filter>
@@ -165,14 +165,17 @@
 
         <receiver android:name="com.easemob.chat.EMMonitorReceiver">
             <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_REMOVED"/>
-                <data android:scheme="package"/>
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+
+                <data android:scheme="package" />
             </intent-filter>
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.USER_PRESENT" />
             </intent-filter>
         </receiver>
+
+        <activity android:name=".activity.weatherForecast.WeatherForecastActivity"></activity>
     </application>
 
 </manifest>

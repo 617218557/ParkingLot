@@ -15,6 +15,8 @@ public class GlobalDefine {
 	// IM即时通信
 	public static String IM_APPKEY= "d0044ef8d4baa85de9e393dd";
 	public static String IM_USER_PASSWORD = "parkinglot";
+	//百度车联网API
+	public static String CAR_API_AK = "fTvBOmDjpfu5bulB06ByOToR";
 
 	// 用户表
 	public static int USER_GENDER_FEMALE = 0; // 女性

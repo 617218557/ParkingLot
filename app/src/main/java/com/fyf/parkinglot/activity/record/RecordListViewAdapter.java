@@ -16,7 +16,6 @@ import com.fyf.parkinglot.model.UserInfoInCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageSize;
-import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import java.util.ArrayList;
 
@@ -57,7 +56,7 @@ public class RecordListViewAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, ViewGroup parent) {
 
         final ViewHolder holder;
         if (convertView == null) {
@@ -86,14 +85,7 @@ public class RecordListViewAdapter extends BaseAdapter {
             if (carInfoBean.getCar_id() == recordList.get(position).getCar_id())
                 holder.tv_type.setText(carInfoBean.getCar_type());
             holder.tv_licenseNum.setText(carInfoBean.getCar_licenseNum());
-            ImageLoader.getInstance().loadImage(carInfoBean.getCar_img(), mImageSize, options,
-                    new SimpleImageLoadingListener() {
-                        @Override
-                        public void onLoadingComplete(String arg0,
-                                                      View arg1, Bitmap bitmap) {
-                            holder.iv_car.setImageBitmap(bitmap);
-                        }
-                    });
+            ImageLoader.getInstance().displayImage(carInfoBean.getCar_img(),  holder.iv_car, options);
         }
         return convertView;
     }

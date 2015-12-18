@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.fyf.parkinglot.activity.weatherForecast.WeatherForecastActivity">
+
+    <include layout="@layout/layout_actionbar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/activity_vertical_margin">
+
+        <TextView
+            android:id="@+id/activity_weather_forecast_tv_city"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/color_black"
+            android:textSize="@dimen/text_size_big" />
+
+        <TextView
+            android:id="@+id/activity_weather_forecast_tv_pm"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/color_black"
+            android:textSize="@dimen/text_size_default" />
+    </LinearLayout>
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/activity_weather_forecast_rv_index"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:overScrollMode="never" />
+
+    <com.twotoasters.jazzylistview.JazzyListView
+        android:id="@+id/activity_weather_forecast_lv_day"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:dividerHeight="0dp"
+        android:listSelector="@android:color/transparent"
+        android:overScrollMode="never"
+        app:effect="grow" />
+</LinearLayout>

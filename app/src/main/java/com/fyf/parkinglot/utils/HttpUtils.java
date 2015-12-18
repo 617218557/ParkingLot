@@ -34,7 +34,7 @@ public class HttpUtils {
 
     }
 
-    public static String httpPost(String url) {
+    public static String httpGet(String url) {
         try {
             Request request = new Request.Builder().url(url).build();
             Response response = client.newCall(request).execute();
@@ -50,4 +50,19 @@ public class HttpUtils {
         }
     }
 
+    public static String httpGetWithOutBase64(String url) {
+        try {
+            Request request = new Request.Builder().url(url).build();
+            Response response = client.newCall(request).execute();
+            if (response.isSuccessful()) {
+                String result = response.body().string();
+                Log.e("HttpResult",result);
+                return result;
+            } else {
+                return response.code() + "";
+            }
+        } catch (Exception e) {
+            return "";
+        }
+    }
 }

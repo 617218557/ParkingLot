@@ -140,6 +140,7 @@ public class AddCarActivity extends AppCompatActivity {
         return true;
     }
 
+    // 上传车辆图片
     private void uploadImage() {
         dialog = new CustomPrgressDailog(AddCarActivity.this, R.style.DialogNormal);
         dialog.show();
@@ -149,7 +150,7 @@ public class AddCarActivity extends AppCompatActivity {
         } else {
             UploadManager uploadManager = new UploadManager();
             File data = new File(imgPath);
-            String key = imgPath.split("/")[imgPath.split("/").length - 1];
+            String key = UserInfoInCache.user_id + "-" + imgPath.split("/")[imgPath.split("/").length - 1];
             String token = Utils.getUploadToken();
             uploadManager.put(data, key, token,
                     new UpCompletionHandler() {

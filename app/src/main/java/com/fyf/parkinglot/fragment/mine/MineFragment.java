@@ -31,6 +31,7 @@ import com.fyf.parkinglot.activity.myCar.MyCarActivity;
 import com.fyf.parkinglot.activity.record.RecordActivity;
 import com.fyf.parkinglot.activity.updateUserInfo.UpdateUserInfoActivity;
 import com.fyf.parkinglot.activity.updateUserPassword.UpdateUserPasswordActivity;
+import com.fyf.parkinglot.activity.weatherForecast.WeatherForecastActivity;
 import com.fyf.parkinglot.common.GlobalDefine;
 import com.fyf.parkinglot.model.UserInfoInCache;
 import com.fyf.parkinglot.push.MyPushMessageReceiver;
@@ -56,7 +57,8 @@ public class MineFragment extends Fragment {
     private TextView tv_name, tv_gender, tv_age, tv_phoneNum;
     private Button btn_edit;
     private HaloView haloView;
-    private RelativeLayout ll_car, ll_record, ll_changePassword, ll_logout;
+    private RelativeLayout ll_car, ll_record, ll_changePassword, ll_weatherForcast,
+            ll_logout;
 
     private String imgPath;
 
@@ -119,6 +121,7 @@ public class MineFragment extends Fragment {
         ll_car = (RelativeLayout) v.findViewById(R.id.fragment_mine_ll_car);
         ll_record = (RelativeLayout) v.findViewById(R.id.fragment_mine_ll_record);
         ll_changePassword = (RelativeLayout) v.findViewById(R.id.fragment_mine_ll_changePassword);
+        ll_weatherForcast = (RelativeLayout) v.findViewById(R.id.fragment_mine_ll_weatherForcast);
         ll_logout = (RelativeLayout) v.findViewById(R.id.fragment_mine_ll_logout);
     }
 
@@ -167,6 +170,12 @@ public class MineFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getActivity(), UpdateUserPasswordActivity.class));
+            }
+        });
+        ll_weatherForcast.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), WeatherForecastActivity.class));
             }
         });
         // 退出登录

@@ -41,6 +41,7 @@
     <string name="fragment_mine_car">我的车辆</string>
     <string name="fragment_mine_record">停车记录</string>
     <string name="fragment_mine_changePassword">修改密码</string>
+    <string name="fragment_mine_weatherForcast">天气预报</string>
     <string name="fragment_mine_logout">退出登录</string>
     <!-- 修改个人信息界面 -->
     <string name="activity_changeUserInfo_change">修改个人信息</string>
@@ -87,4 +88,6 @@
     <string name="activity_add_friends_success">√</string>
     <!-- 我的好友 -->
     <string name="activity_my_friends_friends">我的好友</string>
+    <!-- 天气预报 -->
+    <string name="activity_weather_forecast_forecast">天气预报</string>
 </resources>

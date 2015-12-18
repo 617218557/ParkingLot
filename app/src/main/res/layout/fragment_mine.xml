@@ -187,6 +187,34 @@
                 android:layout_height="1px"
                 android:background="@color/color_border" />
 
+            <!-- 天气预报 -->
+            <RelativeLayout
+                android:id="@+id/fragment_mine_ll_weatherForcast"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/activity_horizontal_margin">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="@string/fragment_mine_weatherForcast"
+                    android:textColor="@color/color_black"
+                    android:textSize="@dimen/text_size_default" />
+
+                <ImageView
+                    android:layout_width="10dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/ic_arrow_right"  />
+            </RelativeLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/color_border" />
+
             <!-- 退出登录 -->
             <RelativeLayout
                 android:id="@+id/fragment_mine_ll_logout"

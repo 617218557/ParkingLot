@@ -10,6 +10,7 @@ import com.fyf.parkinglot.model.ParkinglotInfoBean;
 import com.fyf.parkinglot.model.ResultInfoBean;
 import com.fyf.parkinglot.model.UserInfoBean;
 import com.fyf.parkinglot.model.UserInfoInCache;
+import com.fyf.parkinglot.model.WeatherForecastInfoBean;
 import com.fyf.parkinglot.push.MyPushMessageReceiver;
 import com.google.gson.Gson;
 
@@ -141,7 +142,12 @@ public class JsonUtils {
     }
 
     // 解析即时通信用户信息
-    public static IMInfoBean getImInfo(String json){
-        return gson.fromJson(json,IMInfoBean.class);
+    public static IMInfoBean getImInfo(String json) {
+        return gson.fromJson(json, IMInfoBean.class);
+    }
+
+    //解析天气预报
+    public static WeatherForecastInfoBean getWeatherForecast(String json) {
+        return gson.fromJson(json, WeatherForecastInfoBean.class);
     }
 }

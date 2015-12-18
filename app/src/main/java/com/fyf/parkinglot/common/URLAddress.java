@@ -25,4 +25,5 @@ public class URLAddress {
     public static final String updateCarURL = URL + "updatecarinfocl";// 更新车辆
     public static final String deleteCarURL = URL + "/deletecarinfocl";// 删除车辆
     public static final String findImaccountURl = URL + "/findimaccountcl";// 查找即时通信账户
+    public static final String weatherForcastURL = "http://api.map.baidu.com/telematics/v3/weather";// 天气预报
 }
