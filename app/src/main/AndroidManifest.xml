@@ -94,19 +94,24 @@
         <activity
             android:name=".activity.myFriends.MyFriendsActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.weatherForecast.WeatherForecastActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.singleChat.SingleChatActivity"
+            android:screenOrientation="portrait" />
 
         <!-- push富媒体，不使用富媒体推送不需要 -->
         <activity
             android:name="com.baidu.android.pushservice.richmedia.MediaViewActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:label="MediaViewActivity"></activity>
+            android:label="MediaViewActivity" />
         <activity
             android:name="com.baidu.android.pushservice.richmedia.MediaListActivity"
             android:configChanges="orientation|keyboardHidden"
             android:label="MediaListActivity"
-            android:launchMode="singleTask"></activity>
+            android:launchMode="singleTask" />
         <!-- push富媒体结束 -->
-
 
         <!-- push应用定义消息receiver声明 -->
         <receiver android:name=".push.MyPushMessageReceiver">
@@ -174,8 +179,6 @@
                 <action android:name="android.intent.action.USER_PRESENT" />
             </intent-filter>
         </receiver>
-
-        <activity android:name=".activity.weatherForecast.WeatherForecastActivity"></activity>
     </application>
 
 </manifest>

@@ -1,14 +1,17 @@
 package com.fyf.parkinglot.activity.myFriends;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.easemob.chat.EMContactManager;
 import com.fyf.parkinglot.R;
+import com.fyf.parkinglot.activity.singleChat.SingleChatActivity;
 import com.fyf.parkinglot.view.CustomPrgressDailog;
 import com.twotoasters.jazzylistview.JazzyListView;
 
@@ -85,6 +88,14 @@ public class MyFriendsActivity extends AppCompatActivity {
             dailog.dismiss();
             adapter = new MyFriendsListAdapter(MyFriendsActivity.this, usernames);
             lv_friends.setAdapter(adapter);
+            lv_friends.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Intent intent = new Intent(MyFriendsActivity.this, SingleChatActivity.class);
+                    intent.putExtra("imAccount",usernames.get(position));
+                    startActivity(intent);
+                }
+            });
             super.onPostExecute(o);
         }
     }

@@ -43,7 +43,6 @@ public class IndexAdapter extends
         View v = LayoutInflater.from(parent.getContext()).inflate(
                 R.layout.activity_weather_forecast_index_item, parent, false);
         return new ViewHolder(v);
-
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

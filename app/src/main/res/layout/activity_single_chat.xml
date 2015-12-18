@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/activity_single_chat_actionBar"
+        layout="@layout/layout_actionbar" />
+
+    <ListView
+        android:id="@+id/activity_single_chat_lv_message"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:overScrollMode="never"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="10dp"
+        android:layout_above="@+id/activity_single_chat_ll_input"
+        android:layout_below="@+id/activity_single_chat_actionBar"
+        android:transcriptMode="normal" />
+
+    <RelativeLayout
+        android:id="@+id/activity_single_chat_ll_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="center_vertical">
+
+        <EditText
+            android:id="@+id/activity_single_chat_et_message"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_toLeftOf="@+id/activity_single_chat_btn_send"
+            android:textSize="@dimen/text_size_default" />
+
+        <Button
+            android:id="@+id/activity_single_chat_btn_send"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true"
+            android:text="发送" />
+
+    </RelativeLayout>
+</RelativeLayout>

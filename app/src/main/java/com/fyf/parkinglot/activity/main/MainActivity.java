@@ -9,8 +9,9 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.view.KeyEvent;
-import android.widget.Toast;
 
+import com.easemob.EMCallBack;
+import com.easemob.chat.EMChatManager;
 import com.fyf.parkinglot.R;
 import com.fyf.parkinglot.common.SQLWord;
 import com.fyf.parkinglot.common.ScreenInfo;
@@ -19,6 +20,7 @@ import com.fyf.parkinglot.model.UserInfoInCache;
 import com.fyf.parkinglot.utils.HttpUtils;
 import com.fyf.parkinglot.utils.JsonUtils;
 import com.fyf.parkinglot.view.CustomPrgressDailog;
+import com.fyf.parkinglot.view.CustomToast;
 import com.squareup.okhttp.FormEncodingBuilder;
 import com.squareup.okhttp.RequestBody;
 
@@ -151,10 +153,9 @@ public class MainActivity extends AppCompatActivity {
     public boolean onKeyUp(int keyCode, KeyEvent event) {
         switch (keyCode) {
             case KeyEvent.KEYCODE_BACK:
-                // 当popupwindow全部消失后
                 long secondBackTime = System.currentTimeMillis();
                 if (secondBackTime - firstBackTime > 2000) {
-                    Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+                    CustomToast.showToast(getApplicationContext(),"再按一次退出程序",1000);
                     firstBackTime = secondBackTime;
                     return true;
                 } else {
@@ -168,6 +169,27 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         UserInfoInCache.clear();
+        // 退出聊天
+        EMChatManager.getInstance().logout(new EMCallBack() {
+
+            @Override
+            public void onSuccess() {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void onProgress(int progress, String status) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void onError(int code, String message) {
+                // TODO Auto-generated method stub
+
+            }
+        });
         super.onDestroy();
     }
 }

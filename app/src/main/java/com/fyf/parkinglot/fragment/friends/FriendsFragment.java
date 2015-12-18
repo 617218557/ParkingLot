@@ -20,11 +20,15 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.easemob.EMCallBack;
+import com.easemob.EMEventListener;
+import com.easemob.EMNotifierEvent;
 import com.easemob.chat.EMChat;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMContactListener;
 import com.easemob.chat.EMContactManager;
 import com.easemob.chat.EMGroupManager;
+import com.easemob.chat.EMMessage;
+import com.easemob.chat.TextMessageBody;
 import com.easemob.exceptions.EaseMobException;
 import com.fyf.parkinglot.R;
 import com.fyf.parkinglot.activity.addFriends.AddFriendsActivity;
@@ -251,7 +255,18 @@ public class FriendsFragment extends Fragment {
 
     private void regReceiver() {
         EMChatManager.getInstance().getChatOptions().setUseRoster(true);// 使用好友体系
-        EMChatManager.getInstance().getChatOptions().setAcceptInvitationAlways(false);
+        EMChatManager.getInstance().getChatOptions().setAcceptInvitationAlways(false);// 需要确认好友请求
+        // 设置接收消息监听
+        EMChatManager.getInstance().registerEventListener
+                (new EMEventListener() {
+                    @Override
+                    public void onEvent(EMNotifierEvent event) {
+                        // TODO Auto-generated method stub
+                        EMMessage message = (EMMessage) event.getData();
+                        TextMessageBody txtBody = (TextMessageBody) message.getBody();
+                        Log.e("newMessage", txtBody.getMessage());
+                    }
+                });
         EMContactManager.getInstance().setContactListener(new EMContactListener() {
             @Override
             public void onContactAgreed(String username) {
