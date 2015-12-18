@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="com.fyf.parkinglot.activity.record.RecordActivity">
+
+    <include layout="@layout/layout_actionbar"/>
+
+    <com.twotoasters.jazzylistview.JazzyListView
+        android:id="@+id/activity_record_lv_record"
+        android:layout_width="match_parent"
+        app:effect="wave"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_height="match_parent"/>
+
+</LinearLayout>

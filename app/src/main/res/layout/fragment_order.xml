@@ -1,0 +1,49 @@
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="com.fyf.parkinglot.activity.main.MainActivity$PlaceholderFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/fragment_order_tv_choose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:text="@string/fragment_order_mine"
+            android:textColor="@color/color_black"
+            android:textSize="@dimen/text_size_big" />
+
+        <ImageView
+            android:id="@+id/fragment_order_iv_border"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:background="@color/color_border" />
+
+        <com.twotoasters.jazzylistview.JazzyListView
+            android:id="@+id/fragment_order_lv_orderList"
+            android:layout_width="match_parent"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
+
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/activity_main_fa_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@android:drawable/ic_input_add"
+        app:borderWidth="0dp" />
+
+
+</android.support.design.widget.CoordinatorLayout>

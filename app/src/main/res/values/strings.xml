@@ -1,0 +1,90 @@
+<resources>
+    <string name="app_name">ParkingLot</string>
+
+    <!-- 登陆界面 -->
+    <string name="activity_login_phoneNum">手机号</string>
+    <string name="activity_login_password">密码</string>
+    <string name="activity_login_orRegist">或者,创建账户</string>
+    <string name="activity_login_orLogin">或者,登录</string>
+    <string name="activity_login_login">登录</string>
+    <string name="activity_login_regist">创建账户</string>
+    <string name="activity_login_fail">x</string>
+    <string name="activity_login_success">√</string>
+
+    <!-- actionBar -->
+    <string name="actionBar_order">预约停车</string>
+    <string name="actionBar_next">下一步</string>
+    <string name="actionBar_finish">完成</string>
+    <string name="actionBar_updatePassword">修改密码</string>
+    <string name="actionBar_updateUserInfo">修改个人信息</string>
+    <string name="actionBar_record">停车记录</string>
+    <string name="actionBar_myCar">我的车辆</string>
+    <string name="actionBar_add">添加</string>
+    <string name="actionBar_del">删除</string>
+    <string name="actionBar_update_car">修改车辆信息</string>
+    <string name="actionBar_add_car">添加车辆</string>
+    <!-- 选择停车位界面-->
+    <string name="activity_chooseSpace_choose">选择停放车位</string>
+    <string name="activity_chooseSpace_used">已停车</string>
+    <string name="activity_chooseSpace_notUsed">未停车</string>
+    <string name="activity_chooseSpace_mine">我的车位</string>
+    <string name="activity_chooseSpace_notChoose">您还未选择车位</string>
+    <!-- 选择车辆界面 -->
+    <string name="activity_chooseCar_choose">选择停放车辆</string>
+    <string name="activity_chooseCar_type">车型:</string>
+    <string name="activity_chooseCar_licenseNum">车牌号:</string>
+    <!-- 选择停放时间界面 -->
+    <string name="activity_chooseTime_choose">设置停车时间</string>
+    <!-- 我的预约界面 -->
+    <string name="fragment_order_mine">今日预约</string>
+    <!-- 个人中心界面 -->
+    <string name="fragment_mine_car">我的车辆</string>
+    <string name="fragment_mine_record">停车记录</string>
+    <string name="fragment_mine_changePassword">修改密码</string>
+    <string name="fragment_mine_logout">退出登录</string>
+    <!-- 修改个人信息界面 -->
+    <string name="activity_changeUserInfo_change">修改个人信息</string>
+    <string name="activity_changeUserInfo_name">姓名</string>
+    <string name="activity_changeUserInfo_gender">性别</string>
+    <string name="activity_changeUserInfo_age">年龄</string>
+    <string name="activity_changeUserInfo_submit">提交</string>
+    <string name="activity_changeUserInfo_fail">x</string>
+    <string name="activity_changeUserInfo_success">√</string>
+    <string name="activity_changeUserInfo_male">男</string>
+    <string name="activity_changeUserInfo_female">女</string>
+    <!-- 修改密码 -->
+    <string name="activity_changeUserPassword_old">旧密码</string>
+    <string name="activity_changeUserPassword_new">新密码</string>
+    <string name="activity_changeUserPassword_submit">提交</string>
+    <string name="activity_changeUserPassword_fail">x</string>
+    <string name="activity_changeUserPassword_success">√</string>
+    <!--  停车记录 -->
+    <string name="activity_record_time">时间:</string>
+    <string name="activity_record_fee">费用:</string>
+    <string name="activity_record_type">车型:</string>
+    <string name="activity_record_licenseNum">车牌号:</string>
+    <!-- 我的车辆 -->
+    <string name="activity_my_car_type">车型:</string>
+    <string name="activity_my_car_licenseNum">车牌号:</string>
+    <!-- 修改车辆信息 -->
+    <string name="activity_update_car_type">车型:</string>
+    <string name="activity_update_car_licenseNum">车牌号:</string>
+    <string name="activity_update_car_submit">提交</string>
+    <string name="activity_update_car_fail">x</string>
+    <string name="activity_update_car_success">√</string>
+    <!-- 添加车辆 -->
+    <string name="activity_add_car_type">车型:</string>
+    <string name="activity_add_car_licenseNum">车牌号:</string>
+    <string name="activity_add_car_success">√</string>
+    <string name="activity_add_car_submit">添加</string>
+    <string name="activity_add_car_fail">x</string>
+    <!-- 添加好友 -->
+    <string name="activity_add_friends_add">添加好友</string>
+    <string name="activity_add_friends_imAccount">输入好友手机号</string>
+    <string name="activity_add_friends_reason">输入添加好友理由</string>
+    <string name="activity_add_friends_submit">提交</string>
+    <string name="activity_add_friends_fail">x</string>
+    <string name="activity_add_friends_success">√</string>
+    <!-- 我的好友 -->
+    <string name="activity_my_friends_friends">我的好友</string>
+</resources>

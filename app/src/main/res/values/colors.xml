@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="color_black">#1A1A1A</color>
+    <color name="color_white">#C8C8C8</color>
+    <color name="white_normal">#EFEFF4</color>
+
+    <!-- 分界线的颜色 -->
+    <color name="color_border">#979797</color>
+    <!-- dialog颜色 -->
+    <color name="dialog_normal">#70000000</color>
+
+    <!-- 停车位的颜色 -->
+    <color name="color_space_grey">#7D7D7D</color>
+    <color name="color_space_white">#FFFFFF</color>
+    <color name="color_space_cyan">#74DBCD</color>
+</resources>

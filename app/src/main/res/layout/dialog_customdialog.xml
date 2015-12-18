@@ -1,0 +1,36 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@android:color/transparent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingBottom="20dp"
+    android:paddingLeft="30dp"
+    android:paddingRight="30dp"
+    android:paddingTop="20dp">
+
+    <com.dd.CircularProgressButton
+        android:id="@+id/dialog_custom_btn_loading"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center"
+        app:cpb_colorIndicator="@color/white_normal"
+        app:cpb_colorIndicatorBackground="@color/color_black"
+        app:cpb_colorProgress="@android:color/transparent"
+        app:cpb_selectorIdle="@android:color/transparent"
+        app:cpb_selectorComplete="@android:color/transparent"/>
+
+    <TextView
+        android:id="@+id/dialog_custom_tv_loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp"
+        android:background="@android:color/transparent"
+        android:textColor="@color/color_black"
+        android:textSize="@dimen/text_size_default"
+        android:visibility="gone" />
+
+</LinearLayout>

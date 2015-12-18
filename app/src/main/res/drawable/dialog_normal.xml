@@ -1,0 +1,13 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <solid android:color="@color/white_normal" />
+
+    <corners android:radius="8dp" />
+
+    <gradient
+        android:angle="0"
+        android:centerColor="@color/dialog_normal"
+        android:endColor="@color/dialog_normal"
+        android:startColor="@color/dialog_normal" />
+
+</shape>
