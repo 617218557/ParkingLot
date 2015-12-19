@@ -24,13 +24,11 @@ public class IndexAdapter extends
 
     @Override
     public int getItemCount() {
-        // TODO Auto-generated method stub
         return indexList.size();
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder viewHolder, int position) {
-        // TODO Auto-generated method stub
         viewHolder.tv_title.setText(indexList.get(position).getTitle() + ":");
         viewHolder.tv_zs.setText(indexList.get(position).getZs());
         viewHolder.tv_tipt.setText(indexList.get(position).getTipt() + ":" + indexList.get(position).getDes());
@@ -39,7 +37,6 @@ public class IndexAdapter extends
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int arg1) {
-        // TODO Auto-generated method stub
         View v = LayoutInflater.from(parent.getContext()).inflate(
                 R.layout.activity_weather_forecast_index_item, parent, false);
         return new ViewHolder(v);

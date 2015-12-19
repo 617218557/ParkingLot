@@ -42,7 +42,7 @@ public class SingleChatActivity extends AppCompatActivity {
     private Button btn_next;
     private ListView lv_message;
     private EditText et_message;
-    private Button btn_sendImage;
+    private Button btn_sendMore;
     private Button btn_send;
 
     private SingleChatListAdapter singleChatListAdapter;
@@ -67,7 +67,7 @@ public class SingleChatActivity extends AppCompatActivity {
         tv_title = (TextView) findViewById(R.id.layout_actionBar_tv_title);
         btn_next = (Button) findViewById(R.id.layout_actionBar_btn_next);
         lv_message = (ListView) findViewById(R.id.activity_single_chat_lv_message);
-        btn_sendImage = (Button) findViewById(R.id.activity_single_chat_btn_sendImage);
+        btn_sendMore = (Button) findViewById(R.id.activity_single_chat_btn_sendMore);
         et_message = (EditText) findViewById(R.id.activity_single_chat_et_message);
         btn_send = (Button) findViewById(R.id.activity_single_chat_btn_send);
     }
@@ -83,24 +83,29 @@ public class SingleChatActivity extends AppCompatActivity {
                 }
             }
         });
-        btn_sendImage.setOnClickListener(new View.OnClickListener() {
+        btn_sendMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // 发送图片
-                new AlertDialog.Builder(SingleChatActivity.this).setTitle("提示")
-                        .setPositiveButton("从相册选取图片", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                getImage();
-                            }
-                        }).setNegativeButton("拍照", new DialogInterface.OnClickListener() {
+                // 发送更多类型的消息
+                final String[] items = {"拍照", "从相册选取图片"};
+                new AlertDialog.Builder(SingleChatActivity.this).setItems(items, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        getCamera();
+                        switch (which) {
+                            case 0:
+                                getCamera();
+                                dialog.dismiss();
+                                break;
+                            case 1:
+                                getImage();
+                                dialog.dismiss();
+                                break;
+                        }
                     }
-                }).create().show();
+                }).show();
             }
         });
+        // 设置新消息监听
         EMChatManager.getInstance().registerEventListener
                 (new EMEventListener() {
                     @Override

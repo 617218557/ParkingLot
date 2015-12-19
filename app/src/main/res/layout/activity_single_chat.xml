@@ -30,7 +30,7 @@
         android:gravity="center_vertical">
 
         <Button
-            android:id="@+id/activity_single_chat_btn_sendImage"
+            android:id="@+id/activity_single_chat_btn_sendMore"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_alignParentLeft="true"
@@ -44,7 +44,7 @@
             android:id="@+id/activity_single_chat_et_message"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_toRightOf="@+id/activity_single_chat_btn_sendImage"
+            android:layout_toRightOf="@+id/activity_single_chat_btn_sendMore"
             android:layout_toLeftOf="@+id/activity_single_chat_btn_send"
             android:textSize="@dimen/text_size_default" />
 

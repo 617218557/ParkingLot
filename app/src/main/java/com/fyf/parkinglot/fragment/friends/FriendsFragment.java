@@ -146,9 +146,8 @@ public class FriendsFragment extends Fragment {
         btn_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                final String[] cities = {"我的好友", "添加好友"};
-                new AlertDialog.Builder(getActivity()).setItems(cities, new DialogInterface.OnClickListener() {
+                final String[] items = {"我的好友", "添加好友"};
+                new AlertDialog.Builder(getActivity()).setItems(items, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which) {
@@ -163,7 +162,6 @@ public class FriendsFragment extends Fragment {
                         }
                     }
                 }).show();
-
             }
         });
     }
