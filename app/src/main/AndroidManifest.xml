@@ -92,9 +92,6 @@
             android:name=".activity.addFriends.AddFriendsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.myFriends.MyFriendsActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".activity.weatherForecast.WeatherForecastActivity"
             android:screenOrientation="portrait" />
         <activity

@@ -1,13 +1,13 @@
-package com.fyf.parkinglot.activity.myFriends;
+package com.fyf.parkinglot.fragment.myFriends;
 
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.TextView;
 
 import com.easemob.chat.EMContactManager;
 import com.fyf.parkinglot.R;
@@ -20,52 +20,48 @@ import java.util.List;
 /**
  * Created by fengyifei on 15/12/17.
  */
-public class MyFriendsActivity extends AppCompatActivity {
+public class MyFriendsFragment extends Fragment {
 
-    private Button btn_back;
-    private TextView tv_title;
-    private Button btn_next;
+    private View rootView;
 
     private JazzyListView lv_friends;
     private MyFriendsListAdapter adapter;
     private List<String> usernames;
 
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_friends);
-        findView();
-        setListener();
-        init();
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        if (rootView == null) {
+            rootView = inflater.inflate(R.layout.fragment_my_friends, container, false);
+            findView(rootView);
+            setListener();
+            init();
+        }
+        ViewGroup parent = (ViewGroup) rootView.getParent();
+        if (parent != null) {
+            {
+                parent.removeView(rootView);
+            }
+        }
+        return rootView;
     }
 
-
-    private void findView() {
-        btn_back = (Button) findViewById(R.id.layout_actionBar_btn_back);
-        tv_title = (TextView) findViewById(R.id.layout_actionBar_tv_title);
-        btn_next = (Button) findViewById(R.id.layout_actionBar_btn_next);
-        lv_friends = (JazzyListView) findViewById(R.id.activity_my_friends_lv_friends);
+    private void findView(View v) {
+        lv_friends = (JazzyListView) v.findViewById(R.id.fragment_my_friends_lv_friends);
     }
 
     private void setListener() {
-        btn_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
     }
 
     private void init() {
-        tv_title.setText(R.string.activity_my_friends_friends);
-        btn_next.setVisibility(View.INVISIBLE);
         GetFriendsAsyncTask GetFriendsAsyncTask = new GetFriendsAsyncTask();
         GetFriendsAsyncTask.execute();
     }
 
     // 查询用户好友列表task
     class GetFriendsAsyncTask extends AsyncTask {
-        CustomPrgressDailog dailog = new CustomPrgressDailog(MyFriendsActivity.this, R.style.DialogNormal);
+        CustomPrgressDailog dailog = new CustomPrgressDailog(getActivity(), R.style.DialogNormal);
 
         @Override
         protected void onPreExecute() {
@@ -86,13 +82,13 @@ public class MyFriendsActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Object o) {
             dailog.dismiss();
-            adapter = new MyFriendsListAdapter(MyFriendsActivity.this, usernames);
+            adapter = new MyFriendsListAdapter(getActivity(), usernames);
             lv_friends.setAdapter(adapter);
             lv_friends.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Intent intent = new Intent(MyFriendsActivity.this, SingleChatActivity.class);
-                    intent.putExtra("imAccount",usernames.get(position));
+                    Intent intent = new Intent(getActivity(), SingleChatActivity.class);
+                    intent.putExtra("imAccount", usernames.get(position));
                     startActivity(intent);
                 }
             });

@@ -1,6 +1,5 @@
 package com.fyf.parkinglot.activity.weatherForecast;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,11 +13,9 @@ import java.util.List;
 
 public class IndexAdapter extends
         RecyclerView.Adapter<IndexAdapter.ViewHolder> {
-    private Context context;
     private List<WeatherForecastInfoBean.Results.Index> indexList;
 
-    public IndexAdapter(Context context, List<WeatherForecastInfoBean.Results.Index> indexList) {
-        this.context = context;
+    public IndexAdapter(List<WeatherForecastInfoBean.Results.Index> indexList) {
         this.indexList = indexList;
     }
 

@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager vp_viewPager;
     private TabLayout tabLayout;
 
-    private SectionsPagerAdapter mSectionsPagerAdapter;
+    private MainPagerAdapter mMainPagerAdapter;
 
     private long firstBackTime;
 
@@ -44,9 +44,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void findView() {
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        mMainPagerAdapter = new MainPagerAdapter(getSupportFragmentManager());
         vp_viewPager = (ViewPager) findViewById(R.id.activity_main_vp_container);
-        vp_viewPager.setAdapter(mSectionsPagerAdapter);
+        vp_viewPager.setAdapter(mMainPagerAdapter);
 
         tabLayout = (TabLayout) findViewById(R.id.activity_main_tabs);
         tabLayout.setupWithViewPager(vp_viewPager);

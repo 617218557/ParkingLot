@@ -71,7 +71,7 @@ public class OrderFragment extends Fragment {
 
 
     private void findView(View v) {
-        fa_fab = (FloatingActionButton) v.findViewById(R.id.activity_main_fa_fab);
+        fa_fab = (FloatingActionButton) v.findViewById(R.id.fragment_order_fa_fab);
         lv_orderList = (JazzyListView) v.findViewById(R.id.fragment_order_lv_orderList);
     }
 

@@ -101,7 +101,7 @@ public class WeatherForecastActivity extends AppCompatActivity {
             tv_city.setText(weatherForecastInfoBean.getResults().get(0).getCurrentCity());
             tv_pm.setText("PM2.5: " + weatherForecastInfoBean.getResults().get(0).getPm25());
 
-            indexAdapter = new IndexAdapter(this,
+            indexAdapter = new IndexAdapter(
                     weatherForecastInfoBean.getResults().get(0).getIndex());
             LinearLayoutManager layout = new LinearLayoutManager(WeatherForecastActivity.this);
             layout.setOrientation(LinearLayoutManager.HORIZONTAL);

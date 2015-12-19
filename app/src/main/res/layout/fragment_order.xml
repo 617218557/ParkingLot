@@ -37,7 +37,7 @@
 
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/activity_main_fa_fab"
+        android:id="@+id/fragment_order_fa_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"

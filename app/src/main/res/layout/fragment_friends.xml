@@ -1,19 +1,41 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.fyf.parkinglot.activity.main.MainActivity$PlaceholderFragment">
+    android:fitsSystemWindows="true">
 
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/fragment_friends_bar_appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/appbar_padding_top"
+        android:theme="@style/AppTheme.AppBarOverlay">
 
-    <include layout="@layout/layout_actionbar" />
+        <android.support.design.widget.TabLayout
+            android:id="@+id/fragment_friends_tabs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fillViewport="false"
+            app:tabIndicatorColor="@color/color_white"
+            app:tabMode="fixed" />
 
-    <com.twotoasters.jazzylistview.JazzyListView
-        android:id="@+id/fragment_friends_lv_con"
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/fragment_friends_vp_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:effect="wave" />
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fragment_friends_fa_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@android:drawable/ic_input_add"
+        app:borderWidth="0dp" />
 
 
-</LinearLayout>
+</android.support.design.widget.CoordinatorLayout>

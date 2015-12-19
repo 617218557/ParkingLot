@@ -1,4 +1,4 @@
-package com.fyf.parkinglot.activity.myFriends;
+package com.fyf.parkinglot.fragment.myFriends;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -57,9 +57,9 @@ public class MyFriendsListAdapter extends BaseAdapter {
         if (convertView == null) {
             holder = new ViewHolder();
             convertView = mInflater.inflate(
-                    R.layout.activity_my_friends_list_adapter, parent, false);
+                    R.layout.fragment_my_friends_list_adapter, parent, false);
             holder.tv_imAccount = (TextView) convertView.findViewById
-                    (R.id.activity_my_friends_lv_item_tv_imAccount);
+                    (R.id.fragment_my_friends_lv_item_tv_imAccount);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();

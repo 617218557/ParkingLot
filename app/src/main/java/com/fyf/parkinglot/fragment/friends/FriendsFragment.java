@@ -10,14 +10,15 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
 
 import com.easemob.EMCallBack;
 import com.easemob.EMEventListener;
@@ -32,7 +33,6 @@ import com.easemob.chat.TextMessageBody;
 import com.easemob.exceptions.EaseMobException;
 import com.fyf.parkinglot.R;
 import com.fyf.parkinglot.activity.addFriends.AddFriendsActivity;
-import com.fyf.parkinglot.activity.myFriends.MyFriendsActivity;
 import com.fyf.parkinglot.common.SQLWord;
 import com.fyf.parkinglot.common.URLAddress;
 import com.fyf.parkinglot.model.IMInfoBean;
@@ -43,7 +43,6 @@ import com.fyf.parkinglot.view.CustomPrgressDailog;
 import com.fyf.parkinglot.view.CustomToast;
 import com.squareup.okhttp.FormEncodingBuilder;
 import com.squareup.okhttp.RequestBody;
-import com.twotoasters.jazzylistview.JazzyListView;
 
 import java.util.List;
 
@@ -53,13 +52,11 @@ import java.util.List;
 public class FriendsFragment extends Fragment {
 
     private View rootView;
+    private ViewPager vp_viewPager;
+    private TabLayout tabLayout;
+    private FloatingActionButton fa_fab;// 悬浮按钮
 
-    private Button btn_back;
-    private TextView tv_title;
-    private Button btn_next;
-
-    private JazzyListView lv_con;
-
+    private FriendsPagerAdapter friendsPagerAdapter;
 
     private IMInfoBean imInfoBean;
 
@@ -136,27 +133,26 @@ public class FriendsFragment extends Fragment {
     }
 
     private void findView(View rootView) {
-        btn_back = (Button) rootView.findViewById(R.id.layout_actionBar_btn_back);
-        tv_title = (TextView) rootView.findViewById(R.id.layout_actionBar_tv_title);
-        btn_next = (Button) rootView.findViewById(R.id.layout_actionBar_btn_next);
-        lv_con = (JazzyListView) rootView.findViewById(R.id.fragment_friends_lv_con);
+        vp_viewPager = (ViewPager) rootView.findViewById(R.id.fragment_friends_vp_container);
+        tabLayout = (TabLayout) rootView.findViewById(R.id.fragment_friends_tabs);
+        fa_fab = (FloatingActionButton) rootView.findViewById(R.id.fragment_friends_fa_fab);
     }
 
     private void setListener() {
-        btn_next.setOnClickListener(new View.OnClickListener() {
+        fa_fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final String[] items = {"我的好友", "添加好友"};
+                final String items[] = {"添加好友", "发起群聊"};
                 new AlertDialog.Builder(getActivity()).setItems(items, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which) {
                             case 0:
-                                startActivity(new Intent(getActivity(), MyFriendsActivity.class));
+                                startActivity(new Intent(getActivity(), AddFriendsActivity.class));
                                 dialog.dismiss();
                                 break;
                             case 1:
-                                startActivity(new Intent(getActivity(), AddFriendsActivity.class));
+
                                 dialog.dismiss();
                                 break;
                         }
@@ -167,8 +163,6 @@ public class FriendsFragment extends Fragment {
     }
 
     private void init() {
-        btn_next.setText("+");
-        btn_back.setVisibility(View.INVISIBLE);
 
         FindImAccountTask findImAccountTask = new FindImAccountTask();
         findImAccountTask.execute();
@@ -231,7 +225,20 @@ public class FriendsFragment extends Fragment {
                             EMGroupManager.getInstance().loadAllGroups();
                             EMChatManager.getInstance().loadAllConversations();
                             regReceiver();
-                            Log.d("main", "登陆聊天服务器成功！");
+                            Log.e("main", "登陆聊天服务器成功！");
+                            new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    getActivity().runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            friendsPagerAdapter = new FriendsPagerAdapter(getActivity().getSupportFragmentManager());
+                                            vp_viewPager.setAdapter(friendsPagerAdapter);
+                                            tabLayout.setupWithViewPager(vp_viewPager);
+                                        }
+                                    });
+                                }
+                            }).start();
                         }
                     });
                 }
