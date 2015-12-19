@@ -8,8 +8,10 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
@@ -305,20 +307,41 @@ public class AddCarActivity extends AppCompatActivity {
      * @param data        显示图片
      */
     private void ShowImage(int requestCode, Intent data) {
-        Uri imageUri = data.getData();
-        String[] pojo = {MediaStore.Images.Media.DATA};
-        Cursor cursor = AddCarActivity.this.getContentResolver().query(imageUri, pojo, null, null, null);
-        String imagePath = null;
-        if (cursor != null) {
-            int columnIndex = cursor.getColumnIndexOrThrow(pojo[0]);
-            cursor.moveToFirst();
-            imgPath = cursor.getString(columnIndex);
-            cursor.close();
-
+        try {
+            Uri imageUri = data.getData();
+            imgPath = uri2filePath(imageUri, AddCarActivity.this);
             Bitmap bmp = BitmapFactory.decodeFile(imgPath);
             iv_car.setImageBitmap(bmp);
-        } else {
-            CustomToast.showToast(getApplicationContext(), "选取图片错误", 1000);
+        } catch (Exception e) {
+            e.printStackTrace();
+            CustomToast.showToast(getApplicationContext(), "图片选取错误", 1000);
         }
+    }
+
+    // android4.4会出现从相册选取图片查询路径为空的情况,所以有以下方法
+    private String uri2filePath(Uri uri, Activity activity) {
+        String path = "";
+        if (Build.VERSION.SDK_INT >= 19 && DocumentsContract.isDocumentUri(activity, uri)) {
+            String wholeID = DocumentsContract.getDocumentId(uri);
+            String id = wholeID.split(":")[1];
+            String[] column = {MediaStore.Images.Media.DATA};
+            String sel = MediaStore.Images.Media._ID + "=?";
+            Cursor cursor = activity.getContentResolver().query(
+                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI, column, sel,
+                    new String[]{id}, null);
+            int columnIndex = cursor.getColumnIndex(column[0]);
+            if (cursor.moveToFirst()) {
+                path = cursor.getString(columnIndex);
+            }
+            cursor.close();
+        } else {
+            String[] projection = {MediaStore.Images.Media.DATA};
+            Cursor cursor = activity.getContentResolver().query(uri, projection, null, null, null);
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+
+            cursor.moveToFirst();
+            path = cursor.getString(column_index);
+        }
+        return path;
     }
 }

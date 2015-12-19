@@ -170,6 +170,7 @@ public class FriendsFragment extends Fragment {
 
     private void init() {
         btn_next.setText("+");
+        btn_back.setVisibility(View.INVISIBLE);
 
         FindImAccountTask findImAccountTask = new FindImAccountTask();
         findImAccountTask.execute();

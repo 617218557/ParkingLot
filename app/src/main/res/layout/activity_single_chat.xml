@@ -12,33 +12,52 @@
         android:id="@+id/activity_single_chat_lv_message"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:overScrollMode="never"
-        android:divider="@android:color/transparent"
-        android:dividerHeight="10dp"
         android:layout_above="@+id/activity_single_chat_ll_input"
         android:layout_below="@+id/activity_single_chat_actionBar"
-        android:transcriptMode="normal" />
+        android:divider="@android:color/transparent"
+        android:dividerHeight="10dp"
+        android:overScrollMode="never"
+        android:scrollbars="none" />
 
     <RelativeLayout
         android:id="@+id/activity_single_chat_ll_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:gravity="center_vertical">
+
+        <Button
+            android:id="@+id/activity_single_chat_btn_sendImage"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentLeft="true"
+            android:background="@drawable/btn_black"
+            android:gravity="center"
+            android:layout_centerVertical="true"
+            android:text="+"
+            android:textColor="@color/color_white" />
 
         <EditText
             android:id="@+id/activity_single_chat_et_message"
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:layout_toRightOf="@+id/activity_single_chat_btn_sendImage"
             android:layout_toLeftOf="@+id/activity_single_chat_btn_send"
             android:textSize="@dimen/text_size_default" />
 
         <Button
             android:id="@+id/activity_single_chat_btn_send"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="60dp"
+            android:layout_height="40dp"
             android:layout_alignParentRight="true"
-            android:text="发送" />
+            android:background="@drawable/btn_black"
+            android:gravity="center"
+            android:layout_centerVertical="true"
+            android:text="发送"
+            android:textColor="@color/color_white" />
 
     </RelativeLayout>
 </RelativeLayout>
