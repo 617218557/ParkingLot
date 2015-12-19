@@ -20,18 +20,21 @@ public class FriendsPagerAdapter extends FragmentPagerAdapter {
         super(fm);
     }
 
+    public MyFriendsFragment myFriendsFragment= new MyFriendsFragment();
+    public MyFriendsFragment myFriendsFragment1= new MyFriendsFragment();
+
     @Override
     public Fragment getItem(int position) {
         // getItem is called to instantiate the fragment for the given page.
         // Return a PlaceholderFragment (defined as a static inner class below).
-      switch(position){
-          case 0:
-              return new MyFriendsFragment();
-          case 1:
-              return new MyFriendsFragment();
-          default:
-              return new MyFriendsFragment();
-      }
+        switch (position) {
+            case 0:
+                return myFriendsFragment;
+            case 1:
+                return myFriendsFragment1;
+            default:
+                return myFriendsFragment;
+        }
     }
 
     @Override

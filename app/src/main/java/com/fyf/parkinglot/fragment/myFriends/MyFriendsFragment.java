@@ -96,4 +96,12 @@ public class MyFriendsFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onResume() {
+        if (adapter != null) {
+            adapter.notifyDataSetChanged();
+        }
+        super.onResume();
+    }
+
 }

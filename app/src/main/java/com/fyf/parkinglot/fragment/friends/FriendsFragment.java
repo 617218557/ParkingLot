@@ -15,7 +15,6 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +28,6 @@ import com.easemob.chat.EMContactListener;
 import com.easemob.chat.EMContactManager;
 import com.easemob.chat.EMGroupManager;
 import com.easemob.chat.EMMessage;
-import com.easemob.chat.TextMessageBody;
 import com.easemob.exceptions.EaseMobException;
 import com.fyf.parkinglot.R;
 import com.fyf.parkinglot.activity.addFriends.AddFriendsActivity;
@@ -225,7 +223,6 @@ public class FriendsFragment extends Fragment {
                             EMGroupManager.getInstance().loadAllGroups();
                             EMChatManager.getInstance().loadAllConversations();
                             regReceiver();
-                            Log.e("main", "登陆聊天服务器成功！");
                             new Thread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -250,7 +247,7 @@ public class FriendsFragment extends Fragment {
 
                 @Override
                 public void onError(int code, String message) {
-                    Log.d("main", "登陆聊天服务器失败！");
+                    CustomToast.showToast(getActivity().getApplicationContext(), "登录聊天服务器失败", 1000);
                 }
             });
             dialog.dismiss();
@@ -269,15 +266,26 @@ public class FriendsFragment extends Fragment {
                     public void onEvent(EMNotifierEvent event) {
                         // TODO Auto-generated method stub
                         EMMessage message = (EMMessage) event.getData();
-                        TextMessageBody txtBody = (TextMessageBody) message.getBody();
-                        Log.e("newMessage", txtBody.getMessage());
+                        if (message.getChatType() == EMMessage.ChatType.Chat) {
+                            // 单聊
+                            new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    getActivity().runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            friendsPagerAdapter.myFriendsFragment.onResume();
+                                        }
+                                    });
+                                }
+                            }).start();
+                        }
                     }
                 });
         EMContactManager.getInstance().setContactListener(new EMContactListener() {
             @Override
             public void onContactAgreed(String username) {
                 //好友请求被同意
-                Log.e("好友同意", username);
                 Message msg = new Message();
                 msg.what = MSG_TOAST;
                 msg.obj = username + "同意成为您的好友";
@@ -287,7 +295,6 @@ public class FriendsFragment extends Fragment {
             @Override
             public void onContactRefused(String username) {
                 //好友请求被拒绝
-                Log.e("好友拒绝", username);
                 Message msg = new Message();
                 msg.what = MSG_TOAST;
                 msg.obj = username + "拒绝成为您的好友";
@@ -297,7 +304,6 @@ public class FriendsFragment extends Fragment {
             @Override
             public void onContactInvited(final String username, String reason) {
                 //收到好友邀请
-                Log.e("好友请求", username + "---" + reason);
                 Message msg = new Message();
                 msg.what = MSG_DIALOG;
                 msg.obj = username + "\n" + "理由:" + reason;
@@ -308,7 +314,6 @@ public class FriendsFragment extends Fragment {
             public void onContactDeleted(List<String> usernameList) {
                 //被删除时回调此方法
                 for (String str : usernameList) {
-                    Log.e("被删除", str + "已从好友列表中删除您");
                     Message msg = new Message();
                     msg.what = MSG_TOAST;
                     msg.obj = str + "已从好友列表中删除您";
@@ -320,7 +325,6 @@ public class FriendsFragment extends Fragment {
             public void onContactAdded(List<String> usernameList) {
                 //增加了联系人时回调此方法
                 for (String str : usernameList) {
-                    Log.e("新增好友", str + "已成为您的好友");
                     Message msg = new Message();
                     msg.what = MSG_TOAST;
                     msg.obj = str + "已成为您的好友";

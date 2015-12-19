@@ -1,7 +1,6 @@
 package com.fyf.parkinglot.activity.chooseSpace;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -42,8 +41,6 @@ public class DrawParkinglot1 {
             final ImageView iv = new ImageView(context);
             int leftPadding = (width + padding) * (i % column); // 计算左边距
             int topPadding = i / column * (width + padding); // 计算高度
-
-            Log.e("aaa", leftPadding + "---" + topPadding);
             iv.layout(leftPadding, topPadding, 0, 0);
             iv.setLayoutParams(new android.widget.FrameLayout.LayoutParams(width, width));
 
