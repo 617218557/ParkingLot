@@ -31,7 +31,6 @@ public class IndexAdapter extends
         viewHolder.tv_tipt.setText(indexList.get(position).getTipt() + ":" + indexList.get(position).getDes());
     }
 
-
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int arg1) {
         View v = LayoutInflater.from(parent.getContext()).inflate(
