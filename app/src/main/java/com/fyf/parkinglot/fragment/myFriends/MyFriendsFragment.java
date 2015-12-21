@@ -15,12 +15,13 @@ import com.fyf.parkinglot.activity.singleChat.SingleChatActivity;
 import com.fyf.parkinglot.view.CustomPrgressDailog;
 import com.twotoasters.jazzylistview.JazzyListView;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by fengyifei on 15/12/17.
  */
-public class MyFriendsFragment extends Fragment {
+public class MyFriendsFragment extends Fragment implements Serializable{
 
     private View rootView;
 
@@ -55,6 +56,11 @@ public class MyFriendsFragment extends Fragment {
     }
 
     private void init() {
+        GetFriendsAsyncTask GetFriendsAsyncTask = new GetFriendsAsyncTask();
+        GetFriendsAsyncTask.execute();
+    }
+
+    public void updateMyFriends(){
         GetFriendsAsyncTask GetFriendsAsyncTask = new GetFriendsAsyncTask();
         GetFriendsAsyncTask.execute();
     }

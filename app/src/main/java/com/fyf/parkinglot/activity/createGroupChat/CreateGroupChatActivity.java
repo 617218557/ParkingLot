@@ -86,6 +86,7 @@ public class CreateGroupChatActivity extends AppCompatActivity {
 
     private void init() {
         btn_next.setText(R.string.ativity_create_group_chat_create);
+        tv_title.setText(R.string.ativity_create_group_chat_createGroup);
         GetFriendsAsyncTask getFriendsAsyncTask = new GetFriendsAsyncTask();
         getFriendsAsyncTask.execute();
     }
@@ -140,6 +141,10 @@ public class CreateGroupChatActivity extends AppCompatActivity {
         @Override
         protected Object doInBackground(Object[] params) {
             try {
+                //groupName：要创建的群聊的名称
+                //desc：群聊简介
+                //members：群聊成员,为空时这个创建的群组只包含自己
+                //allowInvite:是否允许群成员邀请人进群
                 EMGroupManager.getInstance().createPrivateGroup(groupName, desc, members, true);//需异步执行
             } catch (Exception e) {
                 e.printStackTrace();

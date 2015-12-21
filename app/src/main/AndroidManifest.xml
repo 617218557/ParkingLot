@@ -103,6 +103,9 @@
         <activity
             android:name=".activity.groupChat.GroupChatActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.groupInfo.GroupInfoActivity"
+            android:screenOrientation="portrait" />
 
         <!-- push富媒体，不使用富媒体推送不需要 -->
         <activity

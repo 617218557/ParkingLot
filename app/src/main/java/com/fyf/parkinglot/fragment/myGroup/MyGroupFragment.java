@@ -12,8 +12,9 @@ import android.widget.AdapterView;
 import com.easemob.chat.EMGroup;
 import com.easemob.chat.EMGroupManager;
 import com.fyf.parkinglot.R;
-import com.fyf.parkinglot.activity.singleChat.SingleChatActivity;
+import com.fyf.parkinglot.activity.groupChat.GroupChatActivity;
 import com.fyf.parkinglot.view.CustomPrgressDailog;
+import com.google.gson.Gson;
 import com.twotoasters.jazzylistview.JazzyListView;
 
 import java.util.List;
@@ -60,6 +61,11 @@ public class MyGroupFragment extends Fragment {
         getFriendsAsyncTask.execute();
     }
 
+    public void updateMyGroup(){
+        GetGroupsAsyncTask getFriendsAsyncTask = new GetGroupsAsyncTask();
+        getFriendsAsyncTask.execute();
+    }
+
     // 查询用户好友列表task
     class GetGroupsAsyncTask extends AsyncTask {
         CustomPrgressDailog dailog = new CustomPrgressDailog(getActivity(), R.style.DialogNormal);
@@ -88,8 +94,8 @@ public class MyGroupFragment extends Fragment {
             lv_groups.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Intent intent = new Intent(getActivity(), SingleChatActivity.class);
-                    intent.putExtra("groupId", groupList.get(position));
+                    Intent intent = new Intent(getActivity(), GroupChatActivity.class);
+                    intent.putExtra("group", new Gson().toJson(groupList.get(position)));
                     startActivity(intent);
                 }
             });

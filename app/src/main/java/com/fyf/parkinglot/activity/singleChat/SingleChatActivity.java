@@ -119,12 +119,12 @@ public class SingleChatActivity extends AppCompatActivity {
                                     @Override
                                     public void run() {
                                         // 在UI线程中更新ui
+                                        conversation.markAllMessagesAsRead();
                                         singleChatListAdapter.updateData(conversation.getAllMessages());
                                         et_message.setText("");
                                         lv_message.setSelection(ListView.FOCUS_DOWN);
                                     }
                                 });
-
                             }
                         }).start();
                     }

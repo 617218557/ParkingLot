@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.fyf.parkinglot.fragment.myFriends.MyFriendsFragment;
+import com.fyf.parkinglot.fragment.myGroup.MyGroupFragment;
 
 /**
  * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
@@ -21,7 +22,7 @@ public class FriendsPagerAdapter extends FragmentPagerAdapter {
     }
 
     public MyFriendsFragment myFriendsFragment= new MyFriendsFragment();
-    public MyFriendsFragment myFriendsFragment1= new MyFriendsFragment();
+    public MyGroupFragment myGroupFragment= new MyGroupFragment();
 
     @Override
     public Fragment getItem(int position) {
@@ -31,7 +32,7 @@ public class FriendsPagerAdapter extends FragmentPagerAdapter {
             case 0:
                 return myFriendsFragment;
             case 1:
-                return myFriendsFragment1;
+                return myGroupFragment;
             default:
                 return myFriendsFragment;
         }
