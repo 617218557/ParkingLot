@@ -90,4 +90,10 @@
     <string name="activity_my_friends_friends">我的好友</string>
     <!-- 天气预报 -->
     <string name="activity_weather_forecast_forecast">天气预报</string>
+    <!-- 发起群聊界面 -->
+    <string name="ativity_create_group_chat_groupName">群聊名称</string>
+    <string name="ativity_create_group_chat_desc">群聊简介</string>
+    <string name="ativity_create_group_chat_menbers">群聊成员:</string>
+    <string name="ativity_create_group_chat_create">完成</string>
+    <string name="ativity_create_group_chat_check">√</string>
 </resources>

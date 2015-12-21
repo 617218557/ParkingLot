@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_actionbar" />
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/activity_create_group_chat_warpper_groupName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin">
+
+        <EditText
+            android:id="@+id/activity_create_group_chat_et_groupName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/ativity_create_group_chat_groupName"
+            android:imeOptions="actionUnspecified"
+            android:inputType="text"
+            android:maxLength="11"
+            android:maxLines="1"
+            android:singleLine="true" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/activity_create_group_chat_warpper_desc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin">
+
+        <EditText
+            android:id="@+id/activity_create_group_chat_et_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/ativity_create_group_chat_desc"
+            android:imeOptions="actionUnspecified"
+            android:inputType="text"
+            android:maxLength="11"
+            android:maxLines="1"
+            android:singleLine="true" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:maxEms="20"
+        android:singleLine="true"
+        android:text="@string/ativity_create_group_chat_menbers"
+        android:textColor="@color/color_black" />
+
+    <com.twotoasters.jazzylistview.JazzyListView
+        android:id="@+id/activity_create_group_chat_lv_friends"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        app:effect="grow" />
+</LinearLayout>

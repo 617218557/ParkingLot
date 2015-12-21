@@ -97,6 +97,12 @@
         <activity
             android:name=".activity.singleChat.SingleChatActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.createGroupChat.CreateGroupChatActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.groupChat.GroupChatActivity"
+            android:screenOrientation="portrait" />
 
         <!-- push富媒体，不使用富媒体推送不需要 -->
         <activity
