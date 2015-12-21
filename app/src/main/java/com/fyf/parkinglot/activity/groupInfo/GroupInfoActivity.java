@@ -15,5 +15,20 @@ public class GroupInfoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_info);
+        findView();
+        setListener();
+        init();
+    }
+
+    private void findView(){
+
+    }
+
+    private void setListener(){
+
+    }
+
+    private void init(){
+
     }
 }
