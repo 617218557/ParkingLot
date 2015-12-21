@@ -16,6 +16,7 @@
             android:orientation="vertical">
             <!-- 群聊名称 -->
             <RelativeLayout
+                android:id="@+id/activity_group_info_ll_groupName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -60,6 +61,7 @@
 
             <!-- 群聊描述-->
             <RelativeLayout
+                android:id="@+id/activity_group_info_ll_groupDesc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"

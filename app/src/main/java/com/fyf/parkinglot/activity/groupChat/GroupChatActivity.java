@@ -26,6 +26,7 @@ import com.easemob.chat.EMConversation;
 import com.easemob.chat.EMGroup;
 import com.easemob.chat.EMMessage;
 import com.fyf.parkinglot.R;
+import com.fyf.parkinglot.activity.groupInfo.GroupInfoActivity;
 import com.fyf.parkinglot.common.GlobalDefine;
 import com.fyf.parkinglot.view.CustomToast;
 import com.google.gson.Gson;
@@ -38,7 +39,6 @@ import java.util.Locale;
  * Created by fengyifei on 15/12/21.
  */
 public class GroupChatActivity extends AppCompatActivity {
-
 
     private Button btn_back;
     private TextView tv_title;
@@ -76,6 +76,20 @@ public class GroupChatActivity extends AppCompatActivity {
     }
 
     private void setListener() {
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        btn_next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(GroupChatActivity.this, GroupInfoActivity.class);
+                intent.putExtra("group",new Gson().toJson(toChatGroup));
+                startActivity(intent);
+            }
+        });
         btn_send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -146,6 +160,7 @@ public class GroupChatActivity extends AppCompatActivity {
                 finish();
             }
         });
+        btn_next.setText(R.string.ativity_group_chat_more);
         // 获取当前conversation对象
         conversation = EMChatManager.getInstance().getConversation(toChatGroup.getGroupId());
         // 把此会话的未读数置为0

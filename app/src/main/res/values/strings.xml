@@ -97,9 +97,12 @@
     <string name="ativity_create_group_chat_menbers">群聊成员:</string>
     <string name="ativity_create_group_chat_create">完成</string>
     <string name="ativity_create_group_chat_check">√</string>
+    <!-- 群聊界面 -->
+    <string name="ativity_group_chat_more">更多</string>
     <!-- 群聊信息界面 -->
     <string name="activity_group_info_info">聊天信息</string>
     <string name="activity_group_info_allMembers">全部群成员</string>
     <string name="activity_group_info_groupName">群聊名称</string>
     <string name="activity_group_info_groupDesc">群聊描述</string>
+    <string name="activity_group_info_addMember">添加成员</string>
 </resources>
