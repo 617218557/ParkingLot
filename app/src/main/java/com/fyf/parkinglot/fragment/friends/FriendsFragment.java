@@ -37,8 +37,6 @@ import com.easemob.exceptions.EaseMobException;
 import com.fyf.parkinglot.R;
 import com.fyf.parkinglot.activity.addFriends.AddFriendsActivity;
 import com.fyf.parkinglot.activity.createGroupChat.CreateGroupChatActivity;
-import com.fyf.parkinglot.activity.groupChat.GroupChatActivity;
-import com.fyf.parkinglot.activity.singleChat.SingleChatActivity;
 import com.fyf.parkinglot.common.SQLWord;
 import com.fyf.parkinglot.common.URLAddress;
 import com.fyf.parkinglot.model.IMInfoBean;
@@ -293,34 +291,30 @@ public class FriendsFragment extends Fragment {
                         // 收到消息时刷新界面
                         if (message.getChatType() == EMMessage.ChatType.Chat) {
                             // 单聊
-                            if (!getTopActivity(getActivity()).equals(SingleChatActivity.class.getName())) {
-                                new Thread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        getActivity().runOnUiThread(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                friendsPagerAdapter.myFriendsFragment.onResume();
-                                            }
-                                        });
-                                    }
-                                }).start();
-                            }
+                            new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    getActivity().runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            friendsPagerAdapter.myFriendsFragment.onResume();
+                                        }
+                                    });
+                                }
+                            }).start();
                         } else if (message.getChatType() == EMMessage.ChatType.GroupChat) {
                             // 群聊
-                            if (!getTopActivity(getActivity()).equals(GroupChatActivity.class.getName())) {
-                                new Thread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        getActivity().runOnUiThread(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                friendsPagerAdapter.myGroupFragment.onResume();
-                                            }
-                                        });
-                                    }
-                                }).start();
-                            }
+                            new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    getActivity().runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            friendsPagerAdapter.myGroupFragment.onResume();
+                                        }
+                                    });
+                                }
+                            }).start();
                         }
                     }
                 });
@@ -437,5 +431,12 @@ public class FriendsFragment extends Fragment {
             return (runningTaskInfos.get(0).topActivity).toString();
         else
             return "";
+    }
+
+    @Override
+    public void onResume() {
+        friendsPagerAdapter.myFriendsFragment.onResume();
+        friendsPagerAdapter.myGroupFragment.onResume();
+        super.onResume();
     }
 }
