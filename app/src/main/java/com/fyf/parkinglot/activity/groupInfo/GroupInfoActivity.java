@@ -153,4 +153,9 @@ public class GroupInfoActivity extends AppCompatActivity {
             super.onPostExecute(o);
         }
     }
+
+    private void updateData(){
+        GetGroupInfoTask getGroupInfoTask = new GetGroupInfoTask();
+        getGroupInfoTask.execute();
+    }
 }
