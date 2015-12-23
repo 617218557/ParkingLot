@@ -77,18 +77,30 @@ public class ChooseTimeActivity extends AppCompatActivity {
     private void init() {
         tv_title.setText(R.string.actionBar_order);
         btn_next.setText(R.string.actionBar_finish);
-
+        tp_picker.setIs24HourView(true);
         Intent intent = getIntent();
         park_id = intent.getIntExtra(SQLWord.PARK_ID, -1);
         car_id = intent.getIntExtra(SQLWord.CAR_ID, -1);
     }
 
     private boolean checkPickerTime() {
-        int year = dp_picker.getYear();
-        int month = dp_picker.getMonth();
-        int day = dp_picker.getDayOfMonth();
-        int hour = tp_picker.getCurrentHour();
-        int minute = tp_picker.getCurrentMinute();
+        String year = dp_picker.getYear() + "";
+        String month = (dp_picker.getMonth() + 1) + "";
+        String day = dp_picker.getDayOfMonth() + "";
+        String hour = tp_picker.getCurrentHour() + "";
+        String minute = tp_picker.getCurrentMinute() + "";
+        if (dp_picker.getMonth() < 9) {
+            month = "0" + (dp_picker.getMonth() + 1);
+        }
+        if (dp_picker.getDayOfMonth() < 10) {
+            day = "0" + dp_picker.getDayOfMonth();
+        }
+        if (tp_picker.getCurrentHour() < 10) {
+            hour = "0" + tp_picker.getCurrentHour();
+        }
+        if (tp_picker.getCurrentMinute() < 10) {
+            minute = "0" + tp_picker.getCurrentMinute();
+        }
         if (Utils.comparePointTime(year + "-" + month + "-" + day
                 + " " + hour + ":" + minute + ":00")) {
             park_startTime = Utils.getCurrentTime(year + "-" + month + "-" + day

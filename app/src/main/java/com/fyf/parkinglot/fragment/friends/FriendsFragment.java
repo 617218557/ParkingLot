@@ -435,8 +435,12 @@ public class FriendsFragment extends Fragment {
 
     @Override
     public void onResume() {
-        friendsPagerAdapter.myFriendsFragment.onResume();
-        friendsPagerAdapter.myGroupFragment.onResume();
+        if (friendsPagerAdapter != null && friendsPagerAdapter.myFriendsFragment != null) {
+            friendsPagerAdapter.myFriendsFragment.onResume();
+        }
+        if (friendsPagerAdapter != null && friendsPagerAdapter.myGroupFragment != null) {
+            friendsPagerAdapter.myGroupFragment.onResume();
+        }
         super.onResume();
     }
 }
