@@ -37,6 +37,7 @@ import com.easemob.exceptions.EaseMobException;
 import com.fyf.parkinglot.R;
 import com.fyf.parkinglot.activity.addFriends.AddFriendsActivity;
 import com.fyf.parkinglot.activity.createGroupChat.CreateGroupChatActivity;
+import com.fyf.parkinglot.common.ContextManager;
 import com.fyf.parkinglot.common.SQLWord;
 import com.fyf.parkinglot.common.URLAddress;
 import com.fyf.parkinglot.model.IMInfoBean;
@@ -182,6 +183,7 @@ public class FriendsFragment extends Fragment {
     }
 
     private void init() {
+        ContextManager.friendsFragment = FriendsFragment.this;
 
         FindImAccountTask findImAccountTask = new FindImAccountTask();
         findImAccountTask.execute();
@@ -442,5 +444,16 @@ public class FriendsFragment extends Fragment {
             friendsPagerAdapter.myGroupFragment.onResume();
         }
         super.onResume();
+    }
+
+    // 更新群列表
+    public void updateGroupList(){
+        friendsPagerAdapter.myGroupFragment.init();
+    }
+
+    @Override
+    public void onDestroy() {
+        ContextManager.friendsFragment = null;
+        super.onDestroy();
     }
 }

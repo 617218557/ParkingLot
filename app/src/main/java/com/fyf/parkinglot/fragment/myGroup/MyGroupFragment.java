@@ -56,7 +56,7 @@ public class MyGroupFragment extends Fragment {
     private void setListener() {
     }
 
-    private void init() {
+    public void init() {
         GetGroupsAsyncTask getFriendsAsyncTask = new GetGroupsAsyncTask();
         getFriendsAsyncTask.execute();
     }

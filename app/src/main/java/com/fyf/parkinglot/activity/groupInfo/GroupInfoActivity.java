@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.easemob.chat.EMGroup;
 import com.easemob.chat.EMGroupManager;
 import com.fyf.parkinglot.R;
+import com.fyf.parkinglot.common.ContextManager;
 import com.fyf.parkinglot.model.UserInfoInCache;
 import com.fyf.parkinglot.utils.ListViewUtils;
 import com.fyf.parkinglot.view.CustomPrgressDailog;
@@ -42,9 +43,9 @@ public class GroupInfoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_info);
+        getDataFromIntent();
         findView();
         setListener();
-        getDataFromIntent();
     }
 
     private void findView() {
@@ -101,6 +102,14 @@ public class GroupInfoActivity extends AppCompatActivity {
                                     }
                                 }
                             }).start();
+                            // 更新相关信息
+                            tv_groupName.setText(et.getText().toString());
+                            if (ContextManager.friendsFragment != null) {
+                                ContextManager.friendsFragment.updateGroupList();
+                            }
+                            if (ContextManager.groupChatActivity != null) {
+                                ContextManager.groupChatActivity.updateTitle(et.getText().toString());
+                            }
                             dialog.dismiss();
                         }
                     }).create().show();

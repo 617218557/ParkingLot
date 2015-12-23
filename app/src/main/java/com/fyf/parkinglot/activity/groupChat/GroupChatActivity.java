@@ -27,6 +27,7 @@ import com.easemob.chat.EMGroup;
 import com.easemob.chat.EMMessage;
 import com.fyf.parkinglot.R;
 import com.fyf.parkinglot.activity.groupInfo.GroupInfoActivity;
+import com.fyf.parkinglot.common.ContextManager;
 import com.fyf.parkinglot.common.GlobalDefine;
 import com.fyf.parkinglot.view.CustomToast;
 import com.google.gson.Gson;
@@ -153,6 +154,8 @@ public class GroupChatActivity extends AppCompatActivity {
     }
 
     private void init() {
+        ContextManager.groupChatActivity = GroupChatActivity.this;
+
         tv_title.setText(toChatGroup.getGroupName());
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -245,6 +248,7 @@ public class GroupChatActivity extends AppCompatActivity {
 
             }
         });
+        ContextManager.groupChatActivity = null;
         super.onDestroy();
     }
 
@@ -341,4 +345,9 @@ public class GroupChatActivity extends AppCompatActivity {
         }
         return path;
     }
+
+    public void updateTitle(String title){
+        tv_title.setText(title);
+    }
+
 }
