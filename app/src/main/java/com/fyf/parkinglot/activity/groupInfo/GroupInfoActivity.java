@@ -8,12 +8,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.easemob.chat.EMGroup;
 import com.easemob.chat.EMGroupManager;
 import com.fyf.parkinglot.R;
+import com.fyf.parkinglot.model.UserInfoInCache;
 import com.fyf.parkinglot.utils.ListViewUtils;
 import com.fyf.parkinglot.view.CustomPrgressDailog;
 import com.fyf.parkinglot.view.MyListView;
@@ -31,6 +33,7 @@ public class GroupInfoActivity extends AppCompatActivity {
     private RelativeLayout ll_groupName, ll_groupDesc;
     private TextView tv_groupName, tv_groupDesc;
     private MyListView lv_members;
+    private ImageView iv_groupName;
 
     private GroupMembersListAdapter adapter;
     private EMGroup toChatGroup;// 群信息
@@ -54,6 +57,8 @@ public class GroupInfoActivity extends AppCompatActivity {
         tv_groupName = (TextView) findViewById(R.id.activity_group_info_tv_groupName);
         tv_groupDesc = (TextView) findViewById(R.id.activity_group_info_tv_groupDesc);
         lv_members = (MyListView) findViewById(R.id.activity_group_info_lv_members);
+
+        iv_groupName = (ImageView) findViewById(R.id.activity_group_info_iv_groupName);
     }
 
     private void setListener() {
@@ -69,36 +74,39 @@ public class GroupInfoActivity extends AppCompatActivity {
 
             }
         });
-        ll_groupName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final EditText et = new EditText(GroupInfoActivity.this);
-                new AlertDialog.Builder(GroupInfoActivity.this).setView(et)
-                        .setTitle("输入新群聊名称")
-                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        }).setPositiveButton("确认", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                try {
-                                    EMGroupManager.getInstance().changeGroupName
-                                            (toChatGroup.getGroupId(), et.getText().toString());
-                                } catch (Exception e) {
-                                    e.printStackTrace();
+        if (toChatGroup.getOwner().equals(UserInfoInCache.user_phoneNum)) {
+            // 该用户是群主
+            ll_groupName.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    final EditText et = new EditText(GroupInfoActivity.this);
+                    new AlertDialog.Builder(GroupInfoActivity.this).setView(et)
+                            .setTitle("输入新群聊名称")
+                            .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
                                 }
-                            }
-                        }).start();
-                        dialog.dismiss();
-                    }
-                }).create().show();
-            }
-        });
+                            }).setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    try {
+                                        EMGroupManager.getInstance().changeGroupName
+                                                (toChatGroup.getGroupId(), et.getText().toString());
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }).start();
+                            dialog.dismiss();
+                        }
+                    }).create().show();
+                }
+            });
+        }
         ll_groupDesc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -118,6 +126,12 @@ public class GroupInfoActivity extends AppCompatActivity {
                 + "(" + toChatGroup.getMembers().size() + "人)");
         btn_next.setText(R.string.activity_group_info_addMember);
         tv_groupName.setText(toChatGroup.getGroupName());
+        if (toChatGroup.getOwner().equals(UserInfoInCache.user_phoneNum)) {
+            // 该用户是群主
+            iv_groupName.setVisibility(View.VISIBLE);
+        } else {
+            iv_groupName.setVisibility(View.INVISIBLE);
+        }
         tv_groupDesc.setText(toChatGroup.getDescription());
         adapter = new GroupMembersListAdapter(GroupInfoActivity.this, toChatGroup.getMembers());
         lv_members.setAdapter(adapter);
@@ -154,7 +168,7 @@ public class GroupInfoActivity extends AppCompatActivity {
         }
     }
 
-    private void updateData(){
+    private void updateData() {
         GetGroupInfoTask getGroupInfoTask = new GetGroupInfoTask();
         getGroupInfoTask.execute();
     }
