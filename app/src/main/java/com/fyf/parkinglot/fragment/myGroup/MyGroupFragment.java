@@ -1,9 +1,11 @@
 package com.fyf.parkinglot.fragment.myGroup;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +15,7 @@ import com.easemob.chat.EMGroup;
 import com.easemob.chat.EMGroupManager;
 import com.fyf.parkinglot.R;
 import com.fyf.parkinglot.activity.groupChat.GroupChatActivity;
+import com.fyf.parkinglot.model.UserInfoInCache;
 import com.fyf.parkinglot.view.CustomPrgressDailog;
 import com.google.gson.Gson;
 import com.twotoasters.jazzylistview.JazzyListView;
@@ -61,7 +64,7 @@ public class MyGroupFragment extends Fragment {
         getFriendsAsyncTask.execute();
     }
 
-    public void updateMyGroup(){
+    public void updateMyGroup() {
         GetGroupsAsyncTask getFriendsAsyncTask = new GetGroupsAsyncTask();
         getFriendsAsyncTask.execute();
     }
@@ -99,6 +102,47 @@ public class MyGroupFragment extends Fragment {
                     startActivity(intent);
                 }
             });
+            lv_groups.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                @Override
+                public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+                    if(groupList.get(position).getOwner().equals(UserInfoInCache.user_phoneNum)){
+                        // 是群主
+                        new AlertDialog.Builder(getActivity()).setTitle("确认解散群("
+                                + groupList.get(position).getGroupName() + ")")
+                                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                    }
+                                }).setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                ExitAndDeleteGroupTask exitAndDeleteGroupTask = new ExitAndDeleteGroupTask(groupList.get(position).getGroupId());
+                                exitAndDeleteGroupTask.execute();
+                                dialog.dismiss();
+                            }
+                        }).create().show();
+                    }else{
+                        // 不是群主
+                        new AlertDialog.Builder(getActivity()).setTitle("确认退出群("
+                                + groupList.get(position).getGroupName() + ")")
+                                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                    }
+                                }).setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                ExitGroupTask exitGroupTask = new ExitGroupTask(groupList.get(position).getGroupId());
+                                exitGroupTask.execute();
+                                dialog.dismiss();
+                            }
+                        }).create().show();
+                    }
+                    return false;
+                }
+            });
             super.onPostExecute(o);
         }
     }
@@ -109,6 +153,72 @@ public class MyGroupFragment extends Fragment {
             adapter.notifyDataSetChanged();
         }
         super.onResume();
+    }
+
+    // 退出群聊
+    class ExitGroupTask extends AsyncTask {
+        private CustomPrgressDailog dailog = new CustomPrgressDailog(getActivity(), R.style.DialogNormal);
+        private String groupId;
+
+        public ExitGroupTask(String groupId) {
+            this.groupId = groupId;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            dailog.show();
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Object doInBackground(Object[] params) {
+            try {
+                EMGroupManager.getInstance().exitFromGroup(groupId);//需异步处理
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Object o) {
+            init();
+            dailog.dismiss();
+            super.onPostExecute(o);
+        }
+    }
+
+    // 解散群聊
+    class ExitAndDeleteGroupTask extends AsyncTask {
+        private CustomPrgressDailog dailog = new CustomPrgressDailog(getActivity(), R.style.DialogNormal);
+        private String groupId;
+
+        public ExitAndDeleteGroupTask(String groupId) {
+            this.groupId = groupId;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            dailog.show();
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Object doInBackground(Object[] params) {
+            try {
+                EMGroupManager.getInstance().exitAndDeleteGroup(groupId);//需异步处理
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Object o) {
+            init();
+            dailog.dismiss();
+            super.onPostExecute(o);
+        }
     }
 
 }

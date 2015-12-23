@@ -1,9 +1,11 @@
 package com.fyf.parkinglot.fragment.myFriends;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +23,7 @@ import java.util.List;
 /**
  * Created by fengyifei on 15/12/17.
  */
-public class MyFriendsFragment extends Fragment implements Serializable{
+public class MyFriendsFragment extends Fragment implements Serializable {
 
     private View rootView;
 
@@ -60,7 +62,7 @@ public class MyFriendsFragment extends Fragment implements Serializable{
         GetFriendsAsyncTask.execute();
     }
 
-    public void updateMyFriends(){
+    public void updateMyFriends() {
         GetFriendsAsyncTask GetFriendsAsyncTask = new GetFriendsAsyncTask();
         GetFriendsAsyncTask.execute();
     }
@@ -98,6 +100,27 @@ public class MyFriendsFragment extends Fragment implements Serializable{
                     startActivity(intent);
                 }
             });
+            lv_friends.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                @Override
+                public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+                    new AlertDialog.Builder(getActivity()).setTitle("确认删除好友("
+                            + usernames.get(position) + ")")
+                            .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            }).setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            DeleteFriendTask deleteFriendTask = new DeleteFriendTask(usernames.get(position));
+                            deleteFriendTask.execute();
+                            dialog.dismiss();
+                        }
+                    }).create().show();
+                    return false;
+                }
+            });
             super.onPostExecute(o);
         }
     }
@@ -110,4 +133,36 @@ public class MyFriendsFragment extends Fragment implements Serializable{
         super.onResume();
     }
 
+    //  删除好友
+    class DeleteFriendTask extends AsyncTask {
+        private CustomPrgressDailog dailog = new CustomPrgressDailog(getActivity(), R.style.DialogNormal);
+        private String ImAccount;
+
+        public DeleteFriendTask(String ImAccount) {
+            this.ImAccount = ImAccount;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            dailog.show();
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Object doInBackground(Object[] params) {
+            try {
+                EMContactManager.getInstance().deleteContact(ImAccount);//需异步处理
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Object o) {
+            init();
+            dailog.dismiss();
+            super.onPostExecute(o);
+        }
+    }
 }

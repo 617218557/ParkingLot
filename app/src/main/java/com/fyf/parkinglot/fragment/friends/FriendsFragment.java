@@ -125,7 +125,53 @@ public class FriendsFragment extends Fragment {
     private Handler groupHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            friendsPagerAdapter.myGroupFragment.updateMyGroup();
+            switch (msg.what) {
+                case MSG_DIALOG:
+                    final String ImAccount = msg.obj.toString().substring(0, 11);
+                    AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
+                    dialog.setTitle("新消息")
+                            .setMessage(msg.obj.toString())
+                            .setPositiveButton("同意", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    new Thread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            try {
+                                                EMChatManager.getInstance().acceptInvitation
+                                                        (ImAccount);//需异步处理
+                                            } catch (Exception e) {
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    }).start();
+                                    dialog.dismiss();
+                                }
+                            }).setNegativeButton("不同意", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    try {
+                                        EMChatManager.getInstance().refuseInvitation
+                                                (ImAccount);//需异步处理
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }).start();
+                            dialog.dismiss();
+                        }
+                    });
+                    dialog.create().show();
+                    break;
+                case MSG_TOAST:
+                    CustomToast.showToast(getActivity().getApplicationContext()
+                            , msg.obj.toString(), 1000);
+                    updateGroupList();
+                    break;
+            }
         }
     };
 
@@ -376,7 +422,10 @@ public class FriendsFragment extends Fragment {
             @Override
             public void onUserRemoved(String groupId, String groupName) {
                 //当前用户被管理员移除出群聊
-                Log.e("当前用户被管理员移除出群聊", "当前用户被管理员移除出群聊");
+                Message msg = new Message();
+                msg.what = MSG_TOAST;
+                msg.obj = "您已被" + groupName + "管理员移除出群聊";
+                groupHandler.sendMessage(msg);
             }
 
             @Override
@@ -401,6 +450,10 @@ public class FriendsFragment extends Fragment {
             public void onGroupDestroy(String groupId, String groupName) {
                 //群聊被创建者解散
                 Log.e("群聊被创建者解散", "群聊被创建者解散");
+                Message msg = new Message();
+                msg.what = MSG_TOAST;
+                msg.obj = "群" + groupName + "被创建者解散";
+                groupHandler.sendMessage(msg);
             }
 
             @Override
@@ -447,8 +500,10 @@ public class FriendsFragment extends Fragment {
     }
 
     // 更新群列表
-    public void updateGroupList(){
-        friendsPagerAdapter.myGroupFragment.init();
+    public void updateGroupList() {
+        if (friendsPagerAdapter != null && friendsPagerAdapter.myGroupFragment != null) {
+            friendsPagerAdapter.myGroupFragment.init();
+        }
     }
 
     @Override
