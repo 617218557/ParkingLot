@@ -36,7 +36,7 @@
     <!-- 选择停放时间界面 -->
     <string name="activity_chooseTime_choose">设置停车时间</string>
     <!-- 我的预约界面 -->
-    <string name="fragment_order_mine">今日预约</string>
+    <string name="fragment_order_mine">我的预约</string>
     <!-- 个人中心界面 -->
     <string name="fragment_mine_car">我的车辆</string>
     <string name="fragment_mine_record">停车记录</string>
