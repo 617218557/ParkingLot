@@ -14,6 +14,7 @@ import android.widget.TimePicker;
 
 import com.fyf.parkinglot.R;
 import com.fyf.parkinglot.activity.main.MainActivity;
+import com.fyf.parkinglot.common.GlobalDefine;
 import com.fyf.parkinglot.common.SQLWord;
 import com.fyf.parkinglot.common.URLAddress;
 import com.fyf.parkinglot.utils.HttpUtils;
@@ -89,6 +90,7 @@ public class ChooseTimeActivity extends AppCompatActivity {
         String day = dp_picker.getDayOfMonth() + "";
         String hour = tp_picker.getCurrentHour() + "";
         String minute = tp_picker.getCurrentMinute() + "";
+        // 调整时间字符串格式
         if (dp_picker.getMonth() < 9) {
             month = "0" + (dp_picker.getMonth() + 1);
         }
@@ -101,11 +103,20 @@ public class ChooseTimeActivity extends AppCompatActivity {
         if (tp_picker.getCurrentMinute() < 10) {
             minute = "0" + tp_picker.getCurrentMinute();
         }
+        // 判断是否在当前时间之前
         if (Utils.comparePointTime(year + "-" + month + "-" + day
                 + " " + hour + ":" + minute + ":00")) {
-            park_startTime = Utils.getCurrentTime(year + "-" + month + "-" + day
-                    + " " + hour + ":" + minute + ":00");
-            return true;
+            if (Utils.comparePointTimeInPointHour(year + "-" + month + "-" + day
+                    + " " + hour + ":" + minute + ":00", GlobalDefine.orderForwardHour)) {
+                // 选择时间在当前时间2小时之后
+                CustomToast.showToast(getApplicationContext(), "只能预约2小时以内", 1000);
+                return false;
+            } else {
+                // ok
+                park_startTime = Utils.getCurrentTime(year + "-" + month + "-" + day
+                        + " " + hour + ":" + minute + ":00");
+                return true;
+            }
         } else {
             CustomToast.showToast(getApplicationContext(), "选择的时间不合适", 1000);
             return false;

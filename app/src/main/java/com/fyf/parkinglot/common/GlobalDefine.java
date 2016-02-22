@@ -72,4 +72,7 @@ public class GlobalDefine {
 	// SharedPreference 相关信息
 	public static String SHAREDPRE_USER_LOGIN_INFO = "USER_LOGIN_INFO";
 
+	// 预约提前时间
+	public static final int orderForwardHour = 2;
+
 }

@@ -24,6 +24,8 @@ import java.util.regex.Pattern;
  */
 public class Utils {
 
+    private static String dateStringFormat = "yyyy-MM-dd HH:mm:ss";
+
     // 手机号验证
     public static boolean isMobileNum(String mobiles) {
         Pattern p = Pattern.compile("^((13[0-9])|(15[^4,\\D])|(18[0-9])|177)\\d{8}$");
@@ -52,19 +54,55 @@ public class Utils {
     }
 
     public static String getCurrentTime() {
-        return getCurrentTime("yyyy-MM-dd HH:mm:ss");
+        return getCurrentTime(dateStringFormat);
     }
 
     // 与当前时间比较,现在时间小于比较时间,返回true
     public static boolean comparePointTime(String time) {
         Date now = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        SimpleDateFormat dateFormat = new SimpleDateFormat(dateStringFormat, Locale.getDefault());
 
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        DateFormat df = new SimpleDateFormat(dateStringFormat, Locale.getDefault());
         try {
             long timeNow = df.parse(dateFormat.format(now)).getTime();
             long timeT = df.parse(time).getTime();
             if (timeNow < timeT)
+                return true;
+            else
+                return false;
+        } catch (java.text.ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    // 指定时间是否在当前时间2小时以内,是则返回true
+    public static boolean comparePointTimeInPointHour(String time, int hourDelay) {
+        // 当前时间转换为calendar
+        Calendar calendar;
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat(dateStringFormat);
+            Date date = sdf.parse(getCurrentTime());
+            calendar = Calendar.getInstance();
+            calendar.setTime(date);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        if (calendar == null) {
+            return false;
+        }
+        //当前时间加2小时
+        calendar.add(Calendar.HOUR_OF_DAY, hourDelay);
+
+        SimpleDateFormat sdf = new SimpleDateFormat(dateStringFormat);
+
+        DateFormat df = new SimpleDateFormat(dateStringFormat, Locale.getDefault());
+        try {
+            long timePoint = df.parse(time).getTime();
+            long timeDelay = df.parse(sdf.format(calendar.getTime())).getTime();
+            if (timePoint < timeDelay)
                 return true;
             else
                 return false;
