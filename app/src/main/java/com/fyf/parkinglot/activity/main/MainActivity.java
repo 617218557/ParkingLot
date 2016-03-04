@@ -8,7 +8,6 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
-import android.view.KeyEvent;
 
 import com.easemob.EMCallBack;
 import com.easemob.chat.EMChatManager;
@@ -20,7 +19,6 @@ import com.fyf.parkinglot.model.UserInfoInCache;
 import com.fyf.parkinglot.utils.HttpUtils;
 import com.fyf.parkinglot.utils.JsonUtils;
 import com.fyf.parkinglot.view.CustomPrgressDailog;
-import com.fyf.parkinglot.view.CustomToast;
 import com.squareup.okhttp.FormEncodingBuilder;
 import com.squareup.okhttp.RequestBody;
 
@@ -30,8 +28,6 @@ public class MainActivity extends AppCompatActivity {
     private TabLayout tabLayout;
 
     private MainPagerAdapter mMainPagerAdapter;
-
-    private long firstBackTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,23 +143,6 @@ public class MainActivity extends AppCompatActivity {
             // 成功时相关处理
             UserInfoInCache.myCarList = JsonUtils.getCarlist(JsonUtils.getResultMsgString(json));
         }
-    }
-
-    @Override
-    public boolean onKeyUp(int keyCode, KeyEvent event) {
-        switch (keyCode) {
-            case KeyEvent.KEYCODE_BACK:
-                long secondBackTime = System.currentTimeMillis();
-                if (secondBackTime - firstBackTime > 2000) {
-                    CustomToast.showToast(getApplicationContext(),"再按一次退出程序",1000);
-                    firstBackTime = secondBackTime;
-                    return true;
-                } else {
-                    System.exit(0);
-                }
-                break;
-        }
-        return super.onKeyUp(keyCode, event);
     }
 
     @Override
