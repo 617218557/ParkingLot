@@ -102,7 +102,7 @@ public class Utils {
         try {
             long timePoint = df.parse(time).getTime();
             long timeDelay = df.parse(sdf.format(calendar.getTime())).getTime();
-            if (timePoint < timeDelay)
+            if (timePoint > timeDelay)
                 return true;
             else
                 return false;

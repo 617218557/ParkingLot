@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -68,8 +69,6 @@ public class ChooseTimeActivity extends AppCompatActivity {
                 if (checkPickerTime()) {
                     OrderTask orderTask = new OrderTask();
                     orderTask.execute();
-                } else {
-                    CustomToast.showToast(getApplicationContext(), "需选择在当前时间之后", 1000);
                 }
             }
         });
@@ -106,6 +105,8 @@ public class ChooseTimeActivity extends AppCompatActivity {
         // 判断是否在当前时间之前
         if (Utils.comparePointTime(year + "-" + month + "-" + day
                 + " " + hour + ":" + minute + ":00")) {
+            Log.e("sss", year + "-" + month + "-" + day
+                    + " " + hour + ":" + minute + ":00");
             if (Utils.comparePointTimeInPointHour(year + "-" + month + "-" + day
                     + " " + hour + ":" + minute + ":00", GlobalDefine.orderForwardHour)) {
                 // 选择时间在当前时间2小时之后

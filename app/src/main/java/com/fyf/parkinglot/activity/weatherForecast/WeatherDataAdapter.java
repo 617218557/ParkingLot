@@ -25,9 +25,9 @@ public class WeatherDataAdapter extends BaseAdapter {
     private Context context;
     private LayoutInflater mInflater;
     private DisplayImageOptions options;
-    private List<WeatherForecastInfoBean.Results.WeatherData> weatherList;
+    private List< WeatherForecastInfoBean.ResultsEntity.WeatherDataEntity> weatherList;
 
-    public WeatherDataAdapter(Context context, List<WeatherForecastInfoBean.Results.WeatherData> weatherList) {
+    public WeatherDataAdapter(Context context, List< WeatherForecastInfoBean.ResultsEntity.WeatherDataEntity> weatherList) {
         this.context = context;
         this.mInflater = LayoutInflater.from(context);
         this.weatherList = weatherList;

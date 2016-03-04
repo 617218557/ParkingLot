@@ -13,9 +13,9 @@ import java.util.List;
 
 public class IndexAdapter extends
         RecyclerView.Adapter<IndexAdapter.ViewHolder> {
-    private List<WeatherForecastInfoBean.Results.Index> indexList;
+    private List<WeatherForecastInfoBean.ResultsEntity.IndexEntity> indexList;
 
-    public IndexAdapter(List<WeatherForecastInfoBean.Results.Index> indexList) {
+    public IndexAdapter(List<WeatherForecastInfoBean.ResultsEntity.IndexEntity> indexList) {
         this.indexList = indexList;
     }
 
