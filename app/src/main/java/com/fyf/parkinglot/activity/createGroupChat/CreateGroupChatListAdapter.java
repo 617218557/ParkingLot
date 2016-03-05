@@ -10,6 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.fyf.parkinglot.R;
+import com.fyf.parkinglot.view.CustomToast;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.assist.ImageSize;
 
@@ -43,9 +44,13 @@ public class CreateGroupChatListAdapter extends BaseAdapter {
     //初始化选择列表
     private void initCheckedList() {
         userCheckedList = new ArrayList<>();
-        int size = imAccountList.size();
-        for (int i = 0; i < size; i++) {
-            userCheckedList.add(false);
+        if(imAccountList == null){
+            CustomToast.showToast(context,"好友列表初始化错误",1000);
+        }else {
+            int size = imAccountList.size();
+            for (int i = 0; i < size; i++) {
+                userCheckedList.add(false);
+            }
         }
     }
 

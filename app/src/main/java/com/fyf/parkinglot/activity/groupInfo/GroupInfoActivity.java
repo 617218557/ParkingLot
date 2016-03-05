@@ -52,6 +52,7 @@ public class GroupInfoActivity extends AppCompatActivity {
         btn_back = (Button) findViewById(R.id.layout_actionBar_btn_back);
         tv_title = (TextView) findViewById(R.id.layout_actionBar_tv_title);
         btn_next = (Button) findViewById(R.id.layout_actionBar_btn_next);
+        btn_next.setVisibility(View.INVISIBLE);
         ll_groupName = (RelativeLayout) findViewById(R.id.activity_group_info_ll_groupName);
         ll_groupDesc = (RelativeLayout) findViewById(R.id.activity_group_info_ll_groupDesc);
 
@@ -72,7 +73,14 @@ public class GroupInfoActivity extends AppCompatActivity {
         btn_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                // 添加群聊成员
+                //群主加人调用此方法
+                if (toChatGroup.getOwner().equals(UserInfoInCache.user_phoneNum)) {
+                    //EMGroupManager.getInstance().addUsersToGroup(toChatGroup.getGroupId(), newmembers);//需异步处理
+                }else {
+                    //私有群里，如果开放了群成员邀请，群成员邀请调用下面方法
+                    //EMGroupManager.getInstance().inviteUser(groupId, newmembers, null);//需异步处理
+                }
             }
         });
         if (toChatGroup.getOwner().equals(UserInfoInCache.user_phoneNum)) {
