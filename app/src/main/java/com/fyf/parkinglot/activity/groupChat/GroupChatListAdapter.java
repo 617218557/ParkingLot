@@ -87,6 +87,9 @@ public class GroupChatListAdapter extends BaseAdapter {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.getDefault());
         Date dt = new Date(msgs.get(position).getMsgTime());
         holder.tv_messageTime.setText(sdf.format(dt));//得到精确到秒的表示
+
+        // 先隐藏语音图标
+        holder.iv_voice.setVisibility(View.GONE);
         // 清空控件服用缓存
         holder.iv_image.setImageDrawable(null);
         if (msgs.get(position).getType() == EMMessage.Type.TXT) {
