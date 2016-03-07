@@ -1,16 +1,10 @@
 package com.fyf.parkinglot.utils;
 
-import android.graphics.Bitmap;
-import android.os.Environment;
 import android.util.Base64;
 
 import com.fyf.parkinglot.common.GlobalDefine;
 import com.qiniu.util.Auth;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -111,20 +105,6 @@ public class Utils {
             e.printStackTrace();
             return false;
         }
-    }
-
-    public static String saveBitmapFile(Bitmap bm, String fileName) throws IOException {
-        String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/parkinglot";
-        File dirFile = new File(path);
-        if (!dirFile.exists()) {
-            dirFile.mkdir();
-        }
-        File myCaptureFile = new File(path + "/" + fileName + ".jpg");
-        BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(myCaptureFile));
-        bm.compress(Bitmap.CompressFormat.JPEG, 80, bos);
-        bos.flush();
-        bos.close();
-        return myCaptureFile.getAbsolutePath();
     }
 
     // 判断白天晚上,true为晚上,false为白天

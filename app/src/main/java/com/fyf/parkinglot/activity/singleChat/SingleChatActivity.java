@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -29,6 +30,7 @@ import com.fyf.parkinglot.common.GlobalDefine;
 import com.fyf.parkinglot.view.CustomToast;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -42,10 +44,12 @@ public class SingleChatActivity extends AppCompatActivity {
     private Button btn_next;
     private ListView lv_message;
     private EditText et_message;
+    private Button btn_voice;
     private Button btn_sendMore;
     private Button btn_send;
 
     private SingleChatListAdapter singleChatListAdapter;
+    private MediaRecorder mRecorder;
 
     private String toChatUsername = "";// 对话人账号
     private EMConversation conversation;
@@ -67,6 +71,7 @@ public class SingleChatActivity extends AppCompatActivity {
         tv_title = (TextView) findViewById(R.id.layout_actionBar_tv_title);
         btn_next = (Button) findViewById(R.id.layout_actionBar_btn_next);
         lv_message = (ListView) findViewById(R.id.activity_single_chat_lv_message);
+        btn_voice = (Button) findViewById(R.id.activity_single_chat_btn_voice);
         btn_sendMore = (Button) findViewById(R.id.activity_single_chat_btn_sendMore);
         et_message = (EditText) findViewById(R.id.activity_single_chat_et_message);
         btn_send = (Button) findViewById(R.id.activity_single_chat_btn_send);
@@ -103,6 +108,12 @@ public class SingleChatActivity extends AppCompatActivity {
                         }
                     }
                 }).show();
+            }
+        });
+        btn_voice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showVoiceRecorder();
             }
         });
         // 设置新消息监听
@@ -243,9 +254,6 @@ public class SingleChatActivity extends AppCompatActivity {
             new DateFormat();
             String name = DateFormat.format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.getDefault())) + ".jpg";
             String path = Environment.getExternalStorageDirectory().getAbsolutePath();
-            File file = new File(path + "/" + GlobalDefine.APP_NAME + "/");
-            if (!file.exists())
-                file.mkdirs();// 创建文件夹
             imgPath = path + "/" + GlobalDefine.APP_NAME + "/" + name;
             File tempFile = new File(Environment.getExternalStorageDirectory(), "/" + GlobalDefine.APP_NAME + "/" + name);
             Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
@@ -315,5 +323,53 @@ public class SingleChatActivity extends AppCompatActivity {
             path = cursor.getString(column_index);
         }
         return path;
+    }
+
+    private void showVoiceRecorder() {
+        String name = DateFormat.format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.getDefault())) + ".3gp";
+        String path = Environment.getExternalStorageDirectory().getAbsolutePath();
+        final String voiceFilePath = path + "/" + GlobalDefine.APP_NAME + "/" + name;
+        if (initRecord(voiceFilePath)) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(SingleChatActivity.this);
+            builder.setTitle("正在录音").setPositiveButton("停止并发送", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    stopRecord();
+                    sendVoiceMessage(voiceFilePath, 0);
+                }
+            }).setNegativeButton("取消录音", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    stopRecord();
+                }
+            });
+            builder.setCancelable(false);
+            builder.show();
+        }
+    }
+
+    // 初始化录音
+    private boolean initRecord(String voiceFilePath) {
+        mRecorder = new MediaRecorder();
+        mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+        mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+        mRecorder.setOutputFile(voiceFilePath);
+        mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+        try {
+            mRecorder.prepare();
+        } catch (IOException e) {
+            e.printStackTrace();
+            CustomToast.showToast(getApplicationContext(), "初始化错误", 1000);
+            return false;
+        }
+        mRecorder.start();
+        return true;
+    }
+
+    // 结束录音
+    private void stopRecord() {
+        mRecorder.stop();
+        mRecorder.release();
+        mRecorder = null;
     }
 }

@@ -2,6 +2,8 @@ package com.fyf.parkinglot.activity.singleChat;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.media.MediaPlayer;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,12 +14,15 @@ import android.widget.TextView;
 import com.easemob.chat.EMMessage;
 import com.easemob.chat.ImageMessageBody;
 import com.easemob.chat.TextMessageBody;
+import com.easemob.chat.VoiceMessageBody;
 import com.easemob.util.PathUtil;
 import com.fyf.parkinglot.R;
 import com.fyf.parkinglot.model.UserInfoInCache;
+import com.fyf.parkinglot.view.CustomToast;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -73,6 +78,7 @@ public class SingleChatListAdapter extends BaseAdapter {
             holder.tv_messageTime = (TextView) convertView.findViewById(R.id.activity_single_chat_list_item_tv_messageTime);
             holder.tv_message = (TextView) convertView.findViewById(R.id.activity_single_chat_list_item_tv_message);
             holder.iv_image = (ImageView) convertView.findViewById(R.id.activity_single_chat_list_item_iv_image);
+            holder.iv_voice = (ImageView) convertView.findViewById(R.id.activity_single_chat_list_item_iv_voice);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -81,6 +87,8 @@ public class SingleChatListAdapter extends BaseAdapter {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.getDefault());
         java.util.Date dt = new Date(msgs.get(position).getMsgTime());
         holder.tv_messageTime.setText(sdf.format(dt));//得到精确到秒的表示
+
+        holder.iv_voice.setVisibility(View.GONE);// 先隐藏声音
         // 清空控件服用缓存
         holder.iv_image.setImageDrawable(null);
         if (msgs.get(position).getType() == EMMessage.Type.TXT) {
@@ -113,7 +121,41 @@ public class SingleChatListAdapter extends BaseAdapter {
                     ImageLoader.getInstance().displayImage("file://" + filePath, holder.iv_image, options);
                 }
             }
-
+        } else if (msgs.get(position).getType() == EMMessage.Type.VOICE) {
+            final int posi = position;
+            // 语音消息
+            holder.iv_voice.setVisibility(View.VISIBLE);
+            if (msgs.get(position).getFrom().equals(UserInfoInCache.user_phoneNum)) {
+                holder.tv_message.setText("我: ");
+            } else {
+                holder.tv_message.setText(msgs.get(position).getFrom() + ":");
+            }
+            holder.iv_voice.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (msgs.get(posi).direct == EMMessage.Direct.RECEIVE) {
+                        // 接收方向的消息
+                        VoiceMessageBody voiceMessageBody = (VoiceMessageBody) msgs.get(posi).getBody();
+                        String path;
+                        if (TextUtils.isEmpty(voiceMessageBody.getLocalUrl())) {
+                            path = voiceMessageBody.getRemoteUrl();
+                        } else {
+                            path = voiceMessageBody.getLocalUrl();
+                        }
+                        playVoice(path);
+                    } else {
+                        // 发送方的消息
+                        VoiceMessageBody voiceMessageBody = (VoiceMessageBody) msgs.get(posi).getBody();
+                        String path;
+                        if (TextUtils.isEmpty(voiceMessageBody.getLocalUrl())) {
+                            path = voiceMessageBody.getRemoteUrl();
+                        } else {
+                            path = voiceMessageBody.getLocalUrl();
+                        }
+                        playVoice(path);
+                    }
+                }
+            });
         }
 
         return convertView;
@@ -124,6 +166,7 @@ public class SingleChatListAdapter extends BaseAdapter {
         public TextView tv_messageTime;
         public TextView tv_message;
         public ImageView iv_image;
+        public ImageView iv_voice;
     }
 
     public static String getImagePath(String remoteUrl) {
@@ -137,5 +180,16 @@ public class SingleChatListAdapter extends BaseAdapter {
         String thumbImageName = thumbRemoteUrl.substring(thumbRemoteUrl.lastIndexOf("/") + 1, thumbRemoteUrl.length());
         String path = PathUtil.getInstance().getImagePath() + "/" + "th" + thumbImageName;
         return path;
+    }
+
+    private void playVoice(String voiceFilePath) {
+        MediaPlayer mPlayer = new MediaPlayer();
+        try {
+            mPlayer.setDataSource(voiceFilePath);
+            mPlayer.prepare();
+            mPlayer.start();
+        } catch (IOException e) {
+            CustomToast.showToast(context, "播放失败", 1000);
+        }
     }
 }

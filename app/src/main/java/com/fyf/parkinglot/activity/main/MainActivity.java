@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.graphics.Rect;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import android.util.DisplayMetrics;
 import com.easemob.EMCallBack;
 import com.easemob.chat.EMChatManager;
 import com.fyf.parkinglot.R;
+import com.fyf.parkinglot.common.GlobalDefine;
 import com.fyf.parkinglot.common.SQLWord;
 import com.fyf.parkinglot.common.ScreenInfo;
 import com.fyf.parkinglot.common.URLAddress;
@@ -21,6 +23,8 @@ import com.fyf.parkinglot.utils.JsonUtils;
 import com.fyf.parkinglot.view.CustomPrgressDailog;
 import com.squareup.okhttp.FormEncodingBuilder;
 import com.squareup.okhttp.RequestBody;
+
+import java.io.File;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -55,6 +59,10 @@ public class MainActivity extends AppCompatActivity {
     private void init() {
         GetCarAsyncTask getCarAsyncTask = new GetCarAsyncTask();
         getCarAsyncTask.execute();
+        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath()
+                + "/" + GlobalDefine.APP_NAME + "/");
+        if (!file.exists())
+            file.mkdirs();// 创建文件夹
     }
 
     // 获取屏幕信息

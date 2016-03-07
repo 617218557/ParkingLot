@@ -251,9 +251,6 @@ public class MineFragment extends Fragment {
             new DateFormat();
             String name = DateFormat.format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.getDefault())) + ".jpg";
             String path = Environment.getExternalStorageDirectory().getAbsolutePath();
-            File file = new File(path + "/" + GlobalDefine.APP_NAME + "/");
-            if (!file.exists())
-                file.mkdirs();// 创建文件夹
             imgPath = path + "/" + GlobalDefine.APP_NAME + "/" + name;
             File tempFile = new File(Environment.getExternalStorageDirectory(), "/" + GlobalDefine.APP_NAME + "/" + name);
             Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
