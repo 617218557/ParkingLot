@@ -1,19 +1,16 @@
 package com.fyf.parkinglot.activity.weatherForecast;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.fyf.parkinglot.R;
 import com.fyf.parkinglot.model.WeatherForecastInfoBean;
 import com.fyf.parkinglot.utils.Utils;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.List;
 
@@ -24,16 +21,12 @@ public class WeatherDataAdapter extends BaseAdapter {
 
     private Context context;
     private LayoutInflater mInflater;
-    private DisplayImageOptions options;
-    private List< WeatherForecastInfoBean.ResultsEntity.WeatherDataEntity> weatherList;
+    private List<WeatherForecastInfoBean.ResultsEntity.WeatherDataEntity> weatherList;
 
-    public WeatherDataAdapter(Context context, List< WeatherForecastInfoBean.ResultsEntity.WeatherDataEntity> weatherList) {
+    public WeatherDataAdapter(Context context, List<WeatherForecastInfoBean.ResultsEntity.WeatherDataEntity> weatherList) {
         this.context = context;
         this.mInflater = LayoutInflater.from(context);
         this.weatherList = weatherList;
-        options = new DisplayImageOptions.Builder()
-                .cacheInMemory(true).cacheOnDisk(true)
-                .bitmapConfig(Bitmap.Config.RGB_565).build();
     }
 
     @Override
@@ -59,7 +52,7 @@ public class WeatherDataAdapter extends BaseAdapter {
             holder = new ViewHolder();
             convertView = mInflater.inflate(
                     R.layout.activity_weather_forecast_data_item, parent, false);
-            holder.iv_weather = (ImageView) convertView.findViewById(R.id.activity_weather_forecast_data_item_iv_weather);
+            holder.iv_weather = (SimpleDraweeView) convertView.findViewById(R.id.activity_weather_forecast_data_item_iv_weather);
             holder.tv_date = (TextView) convertView.findViewById(R.id.activity_weather_forecast_data_item_tv_date);
             holder.tv_weather = (TextView) convertView.findViewById(R.id.activity_weather_forecast_data_item_tv_weather);
             holder.tv_wind = (TextView) convertView.findViewById(R.id.activity_weather_forecast_data_item_tv_wind);
@@ -73,16 +66,14 @@ public class WeatherDataAdapter extends BaseAdapter {
         holder.tv_wind.setText(weatherList.get(position).getWind() + ":");
         holder.tv_temperature.setText(weatherList.get(position).getTemperature());
         // 判断白天晚上,加载不同的图片
-        ImageLoader.getInstance().displayImage(
-                Utils.isNight() == false ?
-                        weatherList.get(position).getDayPictureUrl() :
-                        weatherList.get(position).getNightPictureUrl(),
-                holder.iv_weather, options);
+        Utils.loadImageUtils(holder.iv_weather, !Utils.isNight() ?
+                weatherList.get(position).getDayPictureUrl() :
+                weatherList.get(position).getNightPictureUrl(), context);
         return convertView;
     }
 
     class ViewHolder {
-        public ImageView iv_weather;
+        public SimpleDraweeView iv_weather;
         public TextView tv_date;
         public TextView tv_weather;
         public TextView tv_wind;

@@ -1,7 +1,6 @@
 package com.fyf.parkinglot.fragment.myFriends;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,8 +10,6 @@ import android.widget.TextView;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMConversation;
 import com.fyf.parkinglot.R;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.assist.ImageSize;
 
 import java.util.List;
 
@@ -24,17 +21,11 @@ public class MyFriendsListAdapter extends BaseAdapter {
     private Context context;
     private LayoutInflater mInflater;
     private List<String> imAccountList;
-    private DisplayImageOptions options;
-    private ImageSize mImageSize;
 
     public MyFriendsListAdapter(Context context, List<String> imAccountList) {
         this.context = context;
         this.mInflater = LayoutInflater.from(context);
         this.imAccountList = imAccountList;
-        options = new DisplayImageOptions.Builder()
-                .cacheInMemory(true).cacheOnDisk(true)
-                .bitmapConfig(Bitmap.Config.RGB_565).build();
-        mImageSize = new ImageSize(60, 60);
     }
 
     @Override

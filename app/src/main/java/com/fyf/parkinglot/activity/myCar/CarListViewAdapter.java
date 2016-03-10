@@ -1,18 +1,16 @@
 package com.fyf.parkinglot.activity.myCar;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.fyf.parkinglot.R;
 import com.fyf.parkinglot.model.UserInfoInCache;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.fyf.parkinglot.utils.Utils;
 
 /**
  * Created by fengyifei on 15/11/28.
@@ -21,14 +19,10 @@ public class CarListViewAdapter extends BaseAdapter {
 
     private Context context;
     private LayoutInflater mInflater;
-    private DisplayImageOptions options;
 
     public CarListViewAdapter(Context context) {
         this.context = context;
         this.mInflater = LayoutInflater.from(context);
-        options = new DisplayImageOptions.Builder()
-                .cacheInMemory(true).cacheOnDisk(true)
-                .bitmapConfig(Bitmap.Config.RGB_565).build();
     }
 
     @Override
@@ -54,7 +48,7 @@ public class CarListViewAdapter extends BaseAdapter {
             holder = new ViewHolder();
             convertView = mInflater.inflate(
                     R.layout.activity_my_car_list_item, parent, false);
-            holder.iv_car = (ImageView) convertView.findViewById(R.id.activity_my_car_list_item_iv_car);
+            holder.iv_car = (SimpleDraweeView) convertView.findViewById(R.id.activity_my_car_list_item_iv_car);
             holder.tv_type = (TextView) convertView.findViewById(R.id.activity_my_car_list_item_tv_type);
             holder.tv_licenseNum = (TextView) convertView.findViewById(R.id.activity_my_car_list_item_tv_licenseNum);
             convertView.setTag(holder);
@@ -63,12 +57,12 @@ public class CarListViewAdapter extends BaseAdapter {
         }
         holder.tv_type.setText(UserInfoInCache.myCarList.get(position).getCar_type());
         holder.tv_licenseNum.setText(UserInfoInCache.myCarList.get(position).getCar_licenseNum());
-        ImageLoader.getInstance().displayImage(UserInfoInCache.myCarList.get(position).getCar_img(), holder.iv_car, options);
+        Utils.loadImageUtils(holder.iv_car, UserInfoInCache.myCarList.get(position).getCar_img(), context);
         return convertView;
     }
 
     class ViewHolder {
-        public ImageView iv_car;
+        public SimpleDraweeView iv_car;
         public TextView tv_type;
         public TextView tv_licenseNum;
     }

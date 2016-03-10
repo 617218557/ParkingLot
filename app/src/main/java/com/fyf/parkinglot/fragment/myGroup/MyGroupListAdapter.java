@@ -1,7 +1,6 @@
 package com.fyf.parkinglot.fragment.myGroup;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +11,6 @@ import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMConversation;
 import com.easemob.chat.EMGroup;
 import com.fyf.parkinglot.R;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.assist.ImageSize;
 
 import java.util.List;
 
@@ -25,17 +22,11 @@ public class MyGroupListAdapter extends BaseAdapter {
     private Context context;
     private LayoutInflater mInflater;
     private List<EMGroup> groupList;
-    private DisplayImageOptions options;
-    private ImageSize mImageSize;
 
     public MyGroupListAdapter(Context context, List<EMGroup> groupList) {
         this.context = context;
         this.mInflater = LayoutInflater.from(context);
         this.groupList = groupList;
-        options = new DisplayImageOptions.Builder()
-                .cacheInMemory(true).cacheOnDisk(true)
-                .bitmapConfig(Bitmap.Config.RGB_565).build();
-        mImageSize = new ImageSize(60, 60);
     }
 
     @Override

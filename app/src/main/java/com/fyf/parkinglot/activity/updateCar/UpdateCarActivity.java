@@ -17,13 +17,13 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatEditText;
-import android.support.v7.widget.AppCompatImageView;
 import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.dd.CircularProgressButton;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.fyf.parkinglot.R;
 import com.fyf.parkinglot.common.GlobalDefine;
 import com.fyf.parkinglot.common.SQLWord;
@@ -35,10 +35,6 @@ import com.fyf.parkinglot.utils.JsonUtils;
 import com.fyf.parkinglot.utils.Utils;
 import com.fyf.parkinglot.view.CustomPrgressDailog;
 import com.fyf.parkinglot.view.CustomToast;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.ImageSize;
-import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.qiniu.android.http.ResponseInfo;
 import com.qiniu.android.storage.UpCompletionHandler;
 import com.qiniu.android.storage.UploadManager;
@@ -60,7 +56,7 @@ public class UpdateCarActivity extends AppCompatActivity {
     private Button btn_back;
     private TextView tv_title;
     private Button btn_next;
-    private AppCompatImageView iv_car;
+    private SimpleDraweeView iv_car;
     private TextInputLayout warpper_type, warpper_licenseNum;
     private AppCompatEditText et_type, et_licenseNum;
     private CircularProgressButton btn_submit;
@@ -83,7 +79,7 @@ public class UpdateCarActivity extends AppCompatActivity {
         btn_back = (Button) findViewById(R.id.layout_actionBar_btn_back);
         tv_title = (TextView) findViewById(R.id.layout_actionBar_tv_title);
         btn_next = (Button) findViewById(R.id.layout_actionBar_btn_next);
-        iv_car = (AppCompatImageView) findViewById(R.id.activity_update_car_iv_car);
+        iv_car = (SimpleDraweeView) findViewById(R.id.activity_update_car_iv_car);
         warpper_type = (TextInputLayout) findViewById(R.id.activity_update_car_warpper_type);
         warpper_licenseNum = (TextInputLayout) findViewById(R.id.activity_update_car_warpper_licenseNum);
         et_type = (AppCompatEditText) findViewById(R.id.activity_update_car_et_type);
@@ -149,18 +145,7 @@ public class UpdateCarActivity extends AppCompatActivity {
         index = getIntent().getIntExtra("index", -1);
         CarInfoBean carInfoBean = UserInfoInCache.myCarList.get(index);
         imgPath = carInfoBean.getCar_img();
-        DisplayImageOptions options = new DisplayImageOptions.Builder()
-                .cacheInMemory(true).cacheOnDisk(true)
-                .bitmapConfig(Bitmap.Config.RGB_565).build();
-        ImageSize mImageSize = new ImageSize(60, 60);
-        ImageLoader.getInstance().loadImage(carInfoBean.getCar_img(), mImageSize, options,
-                new SimpleImageLoadingListener() {
-                    @Override
-                    public void onLoadingComplete(String arg0,
-                                                  View arg1, Bitmap bitmap) {
-                        iv_car.setImageBitmap(bitmap);
-                    }
-                });
+        Utils.loadImageUtils(iv_car, carInfoBean.getCar_img(), getApplicationContext());
         et_type.setText(carInfoBean.getCar_type());
         et_licenseNum.setText(carInfoBean.getCar_licenseNum());
     }

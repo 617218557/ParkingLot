@@ -1,7 +1,12 @@
 package com.fyf.parkinglot.utils;
 
+import android.content.Context;
+import android.net.Uri;
 import android.util.Base64;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.interfaces.DraweeController;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.fyf.parkinglot.common.GlobalDefine;
 import com.qiniu.util.Auth;
 
@@ -115,5 +120,40 @@ public class Utils {
         } else {
             return true;
         }
+    }
+
+    public static void loadImageUtils(SimpleDraweeView iv,String url,Context context){
+        Uri uri = Uri.parse(url);
+        DraweeController controller = Fresco.newDraweeControllerBuilder()
+                .setUri(uri)
+                .build();
+        iv.setController(controller);
+
+
+
+
+//        ProgressiveJpegConfig pjpegConfig = new ProgressiveJpegConfig() {
+//            @Override
+//            public int getNextScanNumberToDecode(int scanNumber) {
+//                return scanNumber + 2;
+//            }
+//
+//            public QualityInfo getQualityInfo(int scanNumber) {
+//                boolean isGoodEnough = (scanNumber >= 5);
+//                return ImmutableQualityInfo.of(scanNumber, isGoodEnough, false);
+//            }
+//        };
+//
+//        ImageRequest request = ImageRequestBuilder
+//                .newBuilderWithSource(uri)
+//                .setProgressiveRenderingEnabled(true)
+//                .build();
+//
+//        ImagePipelineConfig imagePipelineConfig = ImagePipelineConfig.newBuilder(context)
+//                .setProgressiveJpegConfig(pjpegConfig)
+//                .build();
+//
+//        iv.setController(controller);
+
     }
 }
