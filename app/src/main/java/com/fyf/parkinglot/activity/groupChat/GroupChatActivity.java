@@ -260,6 +260,9 @@ public class GroupChatActivity extends AppCompatActivity {
             }
         });
         ContextManager.groupChatActivity = null;
+        if(groupChatListAdapter != null){
+            groupChatListAdapter.onDestory();
+        }
         super.onDestroy();
     }
 

@@ -231,6 +231,9 @@ public class SingleChatActivity extends AppCompatActivity {
 
             }
         });
+        if(singleChatListAdapter != null){
+            singleChatListAdapter.onDestory();
+        }
         super.onDestroy();
     }
 
@@ -372,4 +375,5 @@ public class SingleChatActivity extends AppCompatActivity {
         mRecorder.release();
         mRecorder = null;
     }
+
 }

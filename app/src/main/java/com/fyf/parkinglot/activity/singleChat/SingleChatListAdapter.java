@@ -36,6 +36,8 @@ public class SingleChatListAdapter extends BaseAdapter {
     private LayoutInflater mInflater;
     private List<EMMessage> msgs;
 
+    private MediaPlayer mPlayer;
+
     public SingleChatListAdapter(Context context, List<EMMessage> msgs) {
         this.context = context;
         this.mInflater = LayoutInflater.from(context);
@@ -137,7 +139,7 @@ public class SingleChatListAdapter extends BaseAdapter {
                         } else {
                             path = voiceMessageBody.getLocalUrl();
                         }
-                        playVoice(path);
+                        playVoice(path,(ImageView)v);
                     } else {
                         // 发送方的消息
                         VoiceMessageBody voiceMessageBody = (VoiceMessageBody) msgs.get(posi).getBody();
@@ -147,7 +149,7 @@ public class SingleChatListAdapter extends BaseAdapter {
                         } else {
                             path = voiceMessageBody.getLocalUrl();
                         }
-                        playVoice(path);
+                        playVoice(path,(ImageView)v);
                     }
                 }
             });
@@ -168,7 +170,6 @@ public class SingleChatListAdapter extends BaseAdapter {
         String imageName = remoteUrl.substring(remoteUrl.lastIndexOf("/") + 1, remoteUrl.length());
         String path = PathUtil.getInstance().getImagePath() + "/" + imageName;
         return path;
-
     }
 
     public static String getThumbnailImagePath(String thumbRemoteUrl) {
@@ -177,32 +178,56 @@ public class SingleChatListAdapter extends BaseAdapter {
         return path;
     }
 
-    private void playVoice(String voiceFilePath) {
-        MediaPlayer mPlayer = new MediaPlayer();
-        try {
-            mPlayer.setDataSource(voiceFilePath);
-            mPlayer.prepare();
-            mPlayer.start();
-        } catch (IOException e) {
-            CustomToast.showToast(context, "播放失败", 1000);
+    private void playVoice(String voiceFilePath,final ImageView iv) {
+        if (mPlayer == null) {
+            mPlayer = new MediaPlayer();
+            mPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    iv.setBackgroundResource(R.drawable.ic_voice);
+                }
+            });
+            mPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                @Override
+                public void onPrepared(MediaPlayer mp) {
+                    iv.setBackgroundResource(R.drawable.ic_voice_green);
+                }
+            });
+        } else {
+            if (mPlayer.isPlaying()) {
+                mPlayer.stop();
+                mPlayer.reset();
+            }
+            try {
+                mPlayer.setDataSource(voiceFilePath);
+                mPlayer.prepare();
+                mPlayer.start();
+            } catch (IOException e) {
+                CustomToast.showToast(context, "播放失败", 1000);
+            }
         }
     }
 
-    private void showText(ViewHolder holder){
+    private void showText(ViewHolder holder) {
         holder.tv_message.setVisibility(View.VISIBLE);
         holder.iv_image.setVisibility(View.GONE);
         holder.iv_voice.setVisibility(View.GONE);
     }
 
-    private void showImage(ViewHolder holder){
+    private void showImage(ViewHolder holder) {
         holder.tv_message.setVisibility(View.GONE);
         holder.iv_image.setVisibility(View.VISIBLE);
         holder.iv_voice.setVisibility(View.GONE);
     }
 
-    private void showVoice(ViewHolder holder){
+    private void showVoice(ViewHolder holder) {
         holder.tv_message.setVisibility(View.GONE);
         holder.iv_image.setVisibility(View.GONE);
         holder.iv_voice.setVisibility(View.VISIBLE);
+    }
+
+    public void onDestory(){
+        mPlayer.release();
+        mPlayer = null;
     }
 }
