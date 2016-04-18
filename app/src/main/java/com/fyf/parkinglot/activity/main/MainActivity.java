@@ -80,7 +80,6 @@ public class MainActivity extends AppCompatActivity {
         ScreenInfo.setScreenHeight(screenHeight);
         ScreenInfo.setScreenWidth(screenWidth);
         ScreenInfo.setStatusBarHeight(statusBarHeight);
-
     }
 
     // 获取状态栏高度

@@ -250,7 +250,7 @@ public class LoginActivity extends AppCompatActivity {
                     .add("user_name", "")
                     .add("user_age", "0")
                     .add("user_gender", "1")
-                    .add("user_img", "http://www.qq1234.org/uploads/allimg/150403/094200GL-14.jpg")
+                    .add("user_img", "")
                     .build();
             return HttpUtils.httpPost(URLAddress.registURL, body);
         }

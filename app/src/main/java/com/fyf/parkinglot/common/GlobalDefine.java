@@ -3,7 +3,6 @@ package com.fyf.parkinglot.common;
 /**
  * @category 这里约束一些常量定义
  * @author fengyifei
- *
  */
 public class GlobalDefine {
 	public static String APP_NAME = "parkinglot";
