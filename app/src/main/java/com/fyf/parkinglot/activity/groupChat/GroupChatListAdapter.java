@@ -191,18 +191,17 @@ public class GroupChatListAdapter extends BaseAdapter {
                     iv.setBackgroundResource(R.drawable.ic_voice_green);
                 }
             });
-        } else {
-            if (mPlayer.isPlaying()) {
-                mPlayer.stop();
-                mPlayer.reset();
-            }
-            try {
-                mPlayer.setDataSource(voiceFilePath);
-                mPlayer.prepare();
-                mPlayer.start();
-            } catch (IOException e) {
-                CustomToast.showToast(context, "播放失败", 1000);
-            }
+        }
+        if (mPlayer.isPlaying()) {
+            mPlayer.stop();
+            mPlayer.release();
+        }
+        try {
+            mPlayer.setDataSource(voiceFilePath);
+            mPlayer.prepare();
+            mPlayer.start();
+        } catch (IOException e) {
+            CustomToast.showToast(context, "播放失败", 1000);
         }
     }
 

@@ -286,40 +286,40 @@ public class FriendsFragment extends Fragment {
             // 登录聊天服务器
             EMChatManager.getInstance().login(imInfoBean.getIm_account(), imInfoBean.getIm_password()
                     , new EMCallBack() {//回调
-                @Override
-                public void onSuccess() {
-                    getActivity().runOnUiThread(new Runnable() {
-                        public void run() {
-                            EMGroupManager.getInstance().loadAllGroups();
-                            EMChatManager.getInstance().loadAllConversations();
-                            regReceiver();
-                            new Thread(new Runnable() {
-                                @Override
+                        @Override
+                        public void onSuccess() {
+                            getActivity().runOnUiThread(new Runnable() {
                                 public void run() {
-                                    getActivity().runOnUiThread(new Runnable() {
+                                    EMGroupManager.getInstance().loadAllGroups();
+                                    EMChatManager.getInstance().loadAllConversations();
+                                    regReceiver();
+                                    new Thread(new Runnable() {
                                         @Override
                                         public void run() {
-                                            friendsPagerAdapter = new FriendsPagerAdapter(getActivity().getSupportFragmentManager());
-                                            vp_viewPager.setAdapter(friendsPagerAdapter);
-                                            tabLayout.setupWithViewPager(vp_viewPager);
+                                            getActivity().runOnUiThread(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    friendsPagerAdapter = new FriendsPagerAdapter(getActivity().getSupportFragmentManager());
+                                                    vp_viewPager.setAdapter(friendsPagerAdapter);
+                                                    tabLayout.setupWithViewPager(vp_viewPager);
+                                                }
+                                            });
                                         }
-                                    });
+                                    }).start();
                                 }
-                            }).start();
+                            });
+                        }
+
+                        @Override
+                        public void onProgress(int progress, String status) {
+
+                        }
+
+                        @Override
+                        public void onError(int code, String message) {
+                            CustomToast.showToast(getActivity().getApplicationContext(), "登录聊天服务器失败", 1000);
                         }
                     });
-                }
-
-                @Override
-                public void onProgress(int progress, String status) {
-
-                }
-
-                @Override
-                public void onError(int code, String message) {
-                    CustomToast.showToast(getActivity().getApplicationContext(), "登录聊天服务器失败", 1000);
-                }
-            });
             dialog.dismiss();
             super.onPostExecute(o);
         }
@@ -339,30 +339,20 @@ public class FriendsFragment extends Fragment {
                         // 收到消息时刷新界面
                         if (message.getChatType() == EMMessage.ChatType.Chat) {
                             // 单聊
-                            new Thread(new Runnable() {
+                            getActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    getActivity().runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            friendsPagerAdapter.myFriendsFragment.onResume();
-                                        }
-                                    });
+                                    friendsPagerAdapter.myFriendsFragment.onResume();
                                 }
-                            }).start();
+                            });
                         } else if (message.getChatType() == EMMessage.ChatType.GroupChat) {
                             // 群聊
-                            new Thread(new Runnable() {
+                            getActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    getActivity().runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            friendsPagerAdapter.myGroupFragment.onResume();
-                                        }
-                                    });
+                                    friendsPagerAdapter.myGroupFragment.onResume();
                                 }
-                            }).start();
+                            });
                         }
                     }
                 });

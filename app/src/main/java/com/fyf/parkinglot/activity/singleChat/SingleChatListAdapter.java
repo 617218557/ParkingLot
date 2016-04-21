@@ -139,7 +139,7 @@ public class SingleChatListAdapter extends BaseAdapter {
                         } else {
                             path = voiceMessageBody.getLocalUrl();
                         }
-                        playVoice(path,(ImageView)v);
+                        playVoice(path, (ImageView) v);
                     } else {
                         // 发送方的消息
                         VoiceMessageBody voiceMessageBody = (VoiceMessageBody) msgs.get(posi).getBody();
@@ -149,7 +149,7 @@ public class SingleChatListAdapter extends BaseAdapter {
                         } else {
                             path = voiceMessageBody.getLocalUrl();
                         }
-                        playVoice(path,(ImageView)v);
+                        playVoice(path, (ImageView) v);
                     }
                 }
             });
@@ -178,7 +178,7 @@ public class SingleChatListAdapter extends BaseAdapter {
         return path;
     }
 
-    private void playVoice(String voiceFilePath,final ImageView iv) {
+    private void playVoice(String voiceFilePath, final ImageView iv) {
         if (mPlayer == null) {
             mPlayer = new MediaPlayer();
             mPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
@@ -193,19 +193,19 @@ public class SingleChatListAdapter extends BaseAdapter {
                     iv.setBackgroundResource(R.drawable.ic_voice_green);
                 }
             });
-        } else {
-            if (mPlayer.isPlaying()) {
-                mPlayer.stop();
-                mPlayer.reset();
-            }
-            try {
-                mPlayer.setDataSource(voiceFilePath);
-                mPlayer.prepare();
-                mPlayer.start();
-            } catch (IOException e) {
-                CustomToast.showToast(context, "播放失败", 1000);
-            }
         }
+        if (mPlayer.isPlaying()) {
+            mPlayer.stop();
+            mPlayer.release();
+        }
+        try {
+            mPlayer.setDataSource(voiceFilePath);
+            mPlayer.prepare();
+            mPlayer.start();
+        } catch (IOException e) {
+            CustomToast.showToast(context, "播放失败", 1000);
+        }
+
     }
 
     private void showText(ViewHolder holder) {
@@ -226,7 +226,7 @@ public class SingleChatListAdapter extends BaseAdapter {
         holder.iv_voice.setVisibility(View.VISIBLE);
     }
 
-    public void onDestory(){
+    public void onDestory() {
         mPlayer.release();
         mPlayer = null;
     }
