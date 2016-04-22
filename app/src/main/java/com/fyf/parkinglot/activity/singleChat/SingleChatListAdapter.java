@@ -3,6 +3,7 @@ package com.fyf.parkinglot.activity.singleChat;
 import android.content.Context;
 import android.media.MediaPlayer;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -181,31 +182,32 @@ public class SingleChatListAdapter extends BaseAdapter {
     private void playVoice(String voiceFilePath, final ImageView iv) {
         if (mPlayer == null) {
             mPlayer = new MediaPlayer();
-            mPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                @Override
-                public void onCompletion(MediaPlayer mp) {
-                    iv.setBackgroundResource(R.drawable.ic_voice);
-                }
-            });
-            mPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                @Override
-                public void onPrepared(MediaPlayer mp) {
-                    iv.setBackgroundResource(R.drawable.ic_voice_green);
-                }
-            });
+
         }
         if (mPlayer.isPlaying()) {
+            Log.e("SingeChatAdapter","MediaPlayer IsPlaying");
             mPlayer.stop();
-            mPlayer.release();
         }
+        mPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                iv.setBackgroundResource(R.drawable.ic_voice);
+            }
+        });
+        mPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                iv.setBackgroundResource(R.drawable.ic_voice_green);
+            }
+        });
         try {
+            mPlayer.reset();
             mPlayer.setDataSource(voiceFilePath);
             mPlayer.prepare();
             mPlayer.start();
         } catch (IOException e) {
-            CustomToast.showToast(context, "播放失败", 1000);
+            CustomToast.showToast(context, "播放失败:" + e.getMessage(), 1000);
         }
-
     }
 
     private void showText(ViewHolder holder) {

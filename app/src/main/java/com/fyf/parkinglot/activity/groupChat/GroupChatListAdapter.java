@@ -179,29 +179,30 @@ public class GroupChatListAdapter extends BaseAdapter {
     private void playVoice(String voiceFilePath, final ImageView iv) {
         if (mPlayer == null) {
             mPlayer = new MediaPlayer();
-            mPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                @Override
-                public void onCompletion(MediaPlayer mp) {
-                    iv.setBackgroundResource(R.drawable.ic_voice);
-                }
-            });
-            mPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                @Override
-                public void onPrepared(MediaPlayer mp) {
-                    iv.setBackgroundResource(R.drawable.ic_voice_green);
-                }
-            });
+
         }
         if (mPlayer.isPlaying()) {
             mPlayer.stop();
-            mPlayer.release();
         }
+        mPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                iv.setBackgroundResource(R.drawable.ic_voice);
+            }
+        });
+        mPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                iv.setBackgroundResource(R.drawable.ic_voice_green);
+            }
+        });
         try {
+            mPlayer.reset();
             mPlayer.setDataSource(voiceFilePath);
             mPlayer.prepare();
             mPlayer.start();
         } catch (IOException e) {
-            CustomToast.showToast(context, "播放失败", 1000);
+            CustomToast.showToast(context, "播放失败:" + e.getMessage(), 1000);
         }
     }
 
