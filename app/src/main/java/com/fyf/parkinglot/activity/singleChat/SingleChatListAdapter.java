@@ -185,7 +185,7 @@ public class SingleChatListAdapter extends BaseAdapter {
 
         }
         if (mPlayer.isPlaying()) {
-            Log.e("SingeChatAdapter","MediaPlayer IsPlaying");
+            Log.e("SingeChatAdapter", "MediaPlayer IsPlaying");
             mPlayer.stop();
         }
         mPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
@@ -229,7 +229,9 @@ public class SingleChatListAdapter extends BaseAdapter {
     }
 
     public void onDestory() {
-        mPlayer.release();
-        mPlayer = null;
+        if (mPlayer != null) {
+            mPlayer.release();
+            mPlayer = null;
+        }
     }
 }

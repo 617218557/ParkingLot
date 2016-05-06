@@ -225,7 +225,9 @@ public class GroupChatListAdapter extends BaseAdapter {
     }
 
     public void onDestory() {
-        mPlayer.release();
-        mPlayer = null;
+        if (mPlayer != null) {
+            mPlayer.release();
+            mPlayer = null;
+        }
     }
 }
