@@ -29,6 +29,7 @@ import java.util.Locale;
 
 /**
  * Created by fengyifei on 15/12/19.
+ *
  */
 public class GroupChatListAdapter extends BaseAdapter {
 
