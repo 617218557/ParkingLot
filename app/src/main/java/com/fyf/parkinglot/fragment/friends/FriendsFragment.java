@@ -115,7 +115,9 @@ public class FriendsFragment extends Fragment {
                 case MSG_TOAST:
                     CustomToast.showToast(getActivity().getApplicationContext()
                             , msg.obj.toString(), 1000);
-                    friendsPagerAdapter.myFriendsFragment.updateMyFriends();
+                    if (friendsPagerAdapter != null) {
+                        friendsPagerAdapter.myFriendsFragment.updateMyFriends();
+                    }
                     break;
             }
         }

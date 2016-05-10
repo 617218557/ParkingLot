@@ -22,7 +22,7 @@ public class URLAddress {
     public static final String cancleOrderURL = URL + "/cancleorderparkingspacecl"; //  取消预约
     public static final String endParkingURL = URL + "/endorderparkingspacecl";// 结束停车
     public static final String addCarURL = URL + "/addcarinfocl";//  添加车辆
-    public static final String updateCarURL = URL + "updatecarinfocl";// 更新车辆
+    public static final String updateCarURL = URL + "/updatecarinfocl";// 更新车辆
     public static final String deleteCarURL = URL + "/deletecarinfocl";// 删除车辆
     public static final String findImaccountURl = URL + "/findimaccountcl";// 查找即时通信账户
     public static final String weatherForcastURL = "http://api.map.baidu.com/telematics/v3/weather";// 天气预报
