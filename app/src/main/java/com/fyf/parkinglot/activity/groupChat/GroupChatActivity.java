@@ -92,7 +92,7 @@ public class GroupChatActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(GroupChatActivity.this, GroupInfoActivity.class);
-                intent.putExtra("group",new Gson().toJson(toChatGroup));
+                intent.putExtra("group", new Gson().toJson(toChatGroup));
                 startActivity(intent);
             }
         });
@@ -228,23 +228,16 @@ public class GroupChatActivity extends AppCompatActivity {
         //发送消息
         EMChatManager.getInstance().sendMessage(message, null);
         //刷新ui
-        new Thread(new Runnable() {
+        runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        // 在UI线程中更新ui
-                        conversation.markAllMessagesAsRead();
-                        groupChatListAdapter.updateData(conversation.getAllMessages());
-                        et_message.setText("");
-                        lv_message.setSelection(ListView.FOCUS_DOWN);
-                    }
-                });
-
+                // 在UI线程中更新ui
+                conversation.markAllMessagesAsRead();
+                groupChatListAdapter.updateData(conversation.getAllMessages());
+                et_message.setText("");
+                lv_message.setSelection(ListView.FOCUS_DOWN);
             }
-        }).start();
-
+        });
     }
     //===================================================================================
 
@@ -260,7 +253,7 @@ public class GroupChatActivity extends AppCompatActivity {
             }
         });
         ContextManager.groupChatActivity = null;
-        if(groupChatListAdapter != null){
+        if (groupChatListAdapter != null) {
             groupChatListAdapter.onDestory();
         }
         super.onDestroy();
@@ -357,7 +350,7 @@ public class GroupChatActivity extends AppCompatActivity {
         return path;
     }
 
-    public void updateTitle(String title){
+    public void updateTitle(String title) {
         tv_title.setText(title);
     }
 

@@ -217,13 +217,13 @@ public class SingleChatListAdapter extends BaseAdapter {
     }
 
     private void showImage(ViewHolder holder) {
-        holder.tv_message.setVisibility(View.GONE);
+        holder.tv_message.setVisibility(View.VISIBLE);
         holder.iv_image.setVisibility(View.VISIBLE);
         holder.iv_voice.setVisibility(View.GONE);
     }
 
     private void showVoice(ViewHolder holder) {
-        holder.tv_message.setVisibility(View.GONE);
+        holder.tv_message.setVisibility(View.VISIBLE);
         holder.iv_image.setVisibility(View.GONE);
         holder.iv_voice.setVisibility(View.VISIBLE);
     }

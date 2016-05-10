@@ -201,22 +201,15 @@ public class SingleChatActivity extends AppCompatActivity {
         //发送消息
         EMChatManager.getInstance().sendMessage(message, null);
         //刷新ui
-        new Thread(new Runnable() {
+        runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        // 在UI线程中更新ui
-                        singleChatListAdapter.updateData(conversation.getAllMessages());
-                        et_message.setText("");
-                        lv_message.setSelection(ListView.FOCUS_DOWN);
-                    }
-                });
-
+                // 在UI线程中更新ui
+                singleChatListAdapter.updateData(conversation.getAllMessages());
+                et_message.setText("");
+                lv_message.setSelection(ListView.FOCUS_DOWN);
             }
-        }).start();
-
+        });
     }
     //===================================================================================
 
@@ -231,7 +224,7 @@ public class SingleChatActivity extends AppCompatActivity {
 
             }
         });
-        if(singleChatListAdapter != null){
+        if (singleChatListAdapter != null) {
             singleChatListAdapter.onDestory();
         }
         super.onDestroy();

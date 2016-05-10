@@ -68,7 +68,7 @@ public class CreateGroupChatActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (et_groupName.getText().toString().equals("")) {
-                    warpper_groupName.setError("密码不能为空");
+                    warpper_groupName.setError("名称不能为空");
                     return;
                 }
                 warpper_groupName.setError("");

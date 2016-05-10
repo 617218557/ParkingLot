@@ -307,6 +307,5 @@ public class LoginActivity extends AppCompatActivity {
             }
         }).start();
     }
-
 }
 
