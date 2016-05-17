@@ -28,7 +28,7 @@ public class IndexAdapter extends
     public void onBindViewHolder(final ViewHolder viewHolder, int position) {
         viewHolder.tv_title.setText(indexList.get(position).getTitle() + ":");
         viewHolder.tv_zs.setText(indexList.get(position).getZs());
-        viewHolder.tv_tipt.setText(indexList.get(position).getTipt() + ":" + indexList.get(position).getDes());
+        viewHolder.tv_tip.setText(indexList.get(position).getTipt() + ":" + indexList.get(position).getDes());
     }
 
     @Override
@@ -42,15 +42,13 @@ public class IndexAdapter extends
 
         public TextView tv_title;
         public TextView tv_zs;
-        public TextView tv_tipt;
+        public TextView tv_tip;
 
         public ViewHolder(View itemView) {
             super(itemView);
             tv_title = (TextView) itemView.findViewById(R.id.activity_weather_forecast_index_item_tv_title);
             tv_zs = (TextView) itemView.findViewById(R.id.activity_weather_forecast_index_item_tv_zs);
-            tv_tipt = (TextView) itemView.findViewById(R.id.activity_weather_forecast_index_item_tv_tipt);
+            tv_tip = (TextView) itemView.findViewById(R.id.activity_weather_forecast_index_item_tv_tip);
         }
-
     }
-
 }
