@@ -276,6 +276,7 @@ public class FriendsFragment extends Fragment {
                             // 调用sdk注册方法
                             EMChatManager.getInstance().createAccountOnServer
                                     (imInfoBean.getIm_account(), imInfoBean.getIm_password());
+                            loginEMChat();
                         } catch (final EaseMobException e) {
                             //注册失败
                         }
@@ -284,47 +285,46 @@ public class FriendsFragment extends Fragment {
             } else {
                 // 用户已注册即时通信
                 imInfoBean = JsonUtils.getImInfo(JsonUtils.getResultMsgString(json));
+                loginEMChat();
             }
-            // 登录聊天服务器
-            EMChatManager.getInstance().login(imInfoBean.getIm_account(), imInfoBean.getIm_password()
-                    , new EMCallBack() {//回调
-                        @Override
-                        public void onSuccess() {
-                            getActivity().runOnUiThread(new Runnable() {
-                                public void run() {
-                                    EMGroupManager.getInstance().loadAllGroups();
-                                    EMChatManager.getInstance().loadAllConversations();
-                                    regReceiver();
-                                    new Thread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            getActivity().runOnUiThread(new Runnable() {
-                                                @Override
-                                                public void run() {
-                                                    friendsPagerAdapter = new FriendsPagerAdapter(getActivity().getSupportFragmentManager());
-                                                    vp_viewPager.setAdapter(friendsPagerAdapter);
-                                                    tabLayout.setupWithViewPager(vp_viewPager);
-                                                }
-                                            });
-                                        }
-                                    }).start();
-                                }
-                            });
-                        }
-
-                        @Override
-                        public void onProgress(int progress, String status) {
-
-                        }
-
-                        @Override
-                        public void onError(int code, String message) {
-                            CustomToast.showToast(getActivity().getApplicationContext(), "登录聊天服务器失败", 1000);
-                        }
-                    });
             dialog.dismiss();
             super.onPostExecute(o);
         }
+    }
+
+    private void loginEMChat(){
+        // 登录聊天服务器
+        EMChatManager.getInstance().login(imInfoBean.getIm_account(), imInfoBean.getIm_password()
+                , new EMCallBack() {//回调
+                    @Override
+                    public void onSuccess() {
+                        getActivity().runOnUiThread(new Runnable() {
+                            public void run() {
+                                EMGroupManager.getInstance().loadAllGroups();
+                                EMChatManager.getInstance().loadAllConversations();
+                                regReceiver();
+                                friendsPagerAdapter = new FriendsPagerAdapter(getActivity().getSupportFragmentManager());
+                                vp_viewPager.setAdapter(friendsPagerAdapter);
+                                tabLayout.setupWithViewPager(vp_viewPager);
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onProgress(int progress, String status) {
+
+                    }
+
+                    @Override
+                    public void onError(int code, String message) {
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                CustomToast.showToast(getActivity().getApplicationContext(), "登录聊天服务器失败", 1000);
+                            }
+                        });
+                    }
+                });
     }
 
 

@@ -229,8 +229,8 @@ public class UpdateCarActivity extends AppCompatActivity {
                 CarInfoBean carInfoBean = new CarInfoBean();
                 carInfoBean.setCar_id(carInfoBean.getCar_id());
                 carInfoBean.setUser_id(carInfoBean.getUser_id());
-                carInfoBean.setCar_type(Base64.encode(car_type));
-                carInfoBean.setCar_licenseNum(Base64.encode(car_licenseNum));
+                carInfoBean.setCar_type(car_type);
+                carInfoBean.setCar_licenseNum(car_licenseNum);
                 carInfoBean.setCar_img(car_image);
                 UserInfoInCache.myCarList.set(index, carInfoBean);
                 finish();

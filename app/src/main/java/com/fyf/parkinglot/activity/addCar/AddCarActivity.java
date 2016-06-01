@@ -205,50 +205,10 @@ public class AddCarActivity extends AppCompatActivity {
                 CustomToast.showToast(getApplicationContext(), JsonUtils.getResultMsgString(json), 1000);
             } else {
                 // 成功时相关处理
-                GetCarAsyncTask getCarAsyncTask = new GetCarAsyncTask();
-                getCarAsyncTask.execute();
+                finish();
             }
             super.onPostExecute(o);
         }
-    }
-
-    // 查询用户车辆
-    class GetCarAsyncTask extends AsyncTask {
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @Override
-        protected Object doInBackground(Object[] params) {
-            RequestBody body = new FormEncodingBuilder()
-                    .add(SQLWord.USER_ID, UserInfoInCache.user_id + "").build();
-            return HttpUtils.httpPost(URLAddress.findUserCarURL, body);
-        }
-
-        @Override
-        protected void onPostExecute(Object o) {
-            handleCarResult(o.toString());
-            dialog.dismiss();
-            super.onPostExecute(o);
-        }
-    }
-
-    // 处理用户车辆信息
-    private void handleCarResult(String json) {
-        if (json == null || json.equals("")) {
-            CustomToast.showToast(getApplicationContext(), "加载失败", 1000);
-            return;
-        }
-        if (JsonUtils.getResultCode(json) < 1) {
-            // 显示失败原因
-            CustomToast.showToast(getApplicationContext(), JsonUtils.getResultMsgString(json), 1000);
-        } else {
-            // 成功时相关处理
-            UserInfoInCache.myCarList = JsonUtils.getCarlist(JsonUtils.getResultMsgString(json));
-        }
-        finish();
     }
 
     /**

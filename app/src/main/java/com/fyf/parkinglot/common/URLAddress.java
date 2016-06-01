@@ -5,8 +5,8 @@ package com.fyf.parkinglot.common;
  */
 public class URLAddress {
 
-    public static final String publicURL = "";
-    public static final String localURL = "http://115.28.111.133:8080/Parkinglot";
+    public static final String publicURL = "http://115.28.111.133:8080/Parkinglot";
+    public static final String localURL = "http://192.168.2.1:8080/Parkinglot/";
     public static final String URL = localURL;
     public static final String QINIU_URL = "http://www.7xoqdw.com1.z0.glb.clouddn.com";
 

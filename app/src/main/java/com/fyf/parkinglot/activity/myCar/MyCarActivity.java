@@ -68,12 +68,6 @@ public class MyCarActivity extends AppCompatActivity {
     private void init() {
         tv_title.setText(R.string.actionBar_myCar);
         btn_next.setText(R.string.actionBar_add);
-        if (UserInfoInCache.myCarList == null || UserInfoInCache.myCarList.size() == 0) {
-            GetCarAsyncTask getCarAsyncTask = new GetCarAsyncTask();
-            getCarAsyncTask.execute();
-        } else {
-            initList();
-        }
     }
 
     // 查询用户车辆
@@ -119,23 +113,27 @@ public class MyCarActivity extends AppCompatActivity {
     }
 
     private void initList() {
-        adapter = new CarListViewAdapter(MyCarActivity.this);
-        lv_car.setAdapter(adapter);
-        lv_car.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(MyCarActivity.this, UpdateCarActivity.class);
-                intent.putExtra("index", position);
-                startActivity(intent);
-            }
-        });
+        if (adapter == null) {
+            adapter = new CarListViewAdapter(MyCarActivity.this);
+            lv_car.setAdapter(adapter);
+            lv_car.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Intent intent = new Intent(MyCarActivity.this, UpdateCarActivity.class);
+                    intent.putExtra("index", position);
+                    startActivity(intent);
+                }
+            });
+        } else {
+            adapter.notifyDataSetChanged();
+        }
     }
 
     @Override
     protected void onResume() {
-        if (adapter != null) {
-            adapter.notifyDataSetChanged();
-        }
+        GetCarAsyncTask getCarAsyncTask = new GetCarAsyncTask();
+        getCarAsyncTask.execute();
+        initList();
         super.onResume();
     }
 }
